@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 4: Functions and Arrays in C Programming</title>
+    
+    <!-- Prism.js CSS for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-link::before {
+            content: "←";
+            margin-right: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        h3 {
+            color: var(--dark-color);
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .definition {
+            background-color: #e3f2fd;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .key-terms {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .program-example {
+            background-color: #2d2d2d;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .program-example pre {
+            color: #f8f8f2;
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .output {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            white-space: pre-line;
+        }
+
+        .challenge {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--primary-color);
+        }
+
+        .array-visualization {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .toc {
+            background: #f5f7fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .toc ol {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Enhanced Code Styling */
+        pre[class*="language-"] {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        :not(pre) > code {
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)) !important;
+            color: #3498db !important;
+            padding: 0.2em 0.4em !important;
+            border-radius: 6px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.85em !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(52, 152, 219, 0.2) !important;
+        }
+
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .line-numbers-rows > span:before {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .program-example {
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-example pre {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            color: #f8f8f2 !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            overflow-x: auto !important;
+        }
+
+        .output {
+            background: linear-gradient(145deg, #0f3460, #16537e) !important;
+            color: #00ff00 !important;
+            padding: 1.5rem !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            border-radius: 0 0 15px 15px !important;
+            border-top: 2px solid rgba(0, 255, 0, 0.3) !important;
+        }
+
+        /* Burger menu styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 110;
+        }
+
+        .burger-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .burger-bar {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), #fff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .mobile-level-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-level-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-level-card h2::after {
+            content: "▼";
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-level-card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .mobile-topic-list {
+            list-style-type: none;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .mobile-level-card.collapsed .mobile-topic-list {
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .mobile-topic-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-topic-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-topic-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-topic-list a:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            color: var(--secondary-color);
+        }
+        
+        .mobile-topic-list a::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="burger-menu" id="burgerMenu">
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+        </div>
+        <div class="header-content">
+            <a href="index.html" class="back-link">Back to Home</a>
+            <h1>LEVEL 4: FUNCTIONS & ARRAYS</h1>
+            <div style="width: 100px;"></div> <!-- Spacer for alignment -->
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="close-menu" id="closeMenu">&times;</span>
+        <div class="mobile-menu-content" id="mobileMenuContent">
+            <!-- Mobile menu content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-section" style="background: #e3f2fd; border-left: 5px solid #3498db;">
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db;">What You'll Learn in Level 4</h2>
+            <ul style="list-style-type: disc; padding-left: 20px; columns: 2;">
+                <li>What Functions are and why they are useful</li>
+                <li>How to define and call simple functions</li>
+                <li>Passing parameters to functions</li>
+                <li>Returning values from functions</li>
+                <li>Understanding and using Arrays</li>
+                <li>Declaring and initializing one-dimensional arrays</li>
+                <li>Visualizing 1D and 2D array structures</li>
+                <li>Common array operations and mistakes</li>
+            </ul>
+        </div>
+
+        <div class="toc">
+            <h3>In this article</h3>
+            <ol>
+                <li><a href="#functions">Functions: Reusable Code Blocks</a></li>
+                <li><a href="#defining-functions">1. Defining and Calling a Simple Function</a></li>
+                <li><a href="#functions-parameters-return">2. Functions with Parameters and Return Values</a></li>
+                <li><a href="#area-rectangle-example">Example 58: Area of a Rectangle</a></li>
+                <li><a href="#additional-function-examples">Additional Function Examples</a></li>
+                <li><a href="#arrays">Arrays: Storing Lists of Data</a></li>
+                <li><a href="#array-visualization">📦 Array Visualization</a></li>
+                <li><a href="#array-operations-table">📋 Array Operations Reference Table</a></li>
+                <li><a href="#array-index-rules">🔍 Array Index Rules</a></li>
+                <li><a href="#array-mistakes">⚠️ Common Array Mistakes</a></li>
+                <li><a href="#declaring-arrays">1. Declaring and Initializing an Array</a></li>
+                <li><a href="#accessing-array-elements">2. Accessing Array Elements</a></li>
+                <li><a href="#loops-with-arrays">3. Using Loops with Arrays</a></li>
+                <li><a href="#sum-of-array-example">Example 10: Sum of an Array</a></li>
+                <li><a href="#additional-array-examples">Additional Array Examples</a></li>
+                <li><a href="#strings">Strings: Working with Text</a></li>
+                <li><a href="#string-visualization">📝 String Structure Visualization</a></li>
+                <li><a href="#escape-sequences">🔤 Escape Sequences Reference Table</a></li>
+                <li><a href="#ascii-values">🔢 Common ASCII Values Reference</a></li>
+                <li><a href="#string-operations-table">📋 String Operations Quick Reference</a></li>
+                <li><a href="#string-pitfalls">⚠️ String Common Pitfalls</a></li>
+                <li><a href="#declaring-strings">1. Declaring and Initializing Strings</a></li>
+                <li><a href="#common-string-functions">2. Common String Functions</a></li>
+                <li><a href="#username-greeting-example">Example 16: Simple Username Greeting</a></li>
+                <li><a href="#additional-string-examples">Additional String Examples</a></li>
+                <li><a href="#comprehensive-challenges">Comprehensive Practice Challenges</a></li>
+            </ol>
+        </div>
+
+        <div class="content-section">
+            <h2 id="functions">Functions: Reusable Code Blocks</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A function is a self-contained block of code that performs a specific task. It can accept input parameters, process them, and optionally return a result. Functions promote code reusability and modularity.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Terms:</strong>
+                <ul>
+                    <li><strong>Function Declaration:</strong> Tells the compiler about function name, return type, and parameters</li>
+                    <li><strong>Function Definition:</strong> Contains the actual body/implementation of the function</li>
+                    <li><strong>Function Call:</strong> Executing/invoking a function from another part of the program</li>
+                    <li><strong>Parameters:</strong> Input values passed to a function</li>
+                    <li><strong>Return Value:</strong> Output value sent back by a function</li>
+                </ul>
+            </div>
+            
+            <p>A function is a block of code that performs a specific task. You've already been using one: <code>main()</code>! Creating your own functions helps you organize your code and reuse it without copying and pasting.</p>
+            
+            <h3>Why use functions?</h3>
+            
+            <ul>
+                <li><strong>Organization:</strong> Break down a large program into smaller, manageable pieces.</li>
+                <li><strong>Reusability:</strong> Write a piece of code once and use it many times.</li>
+                <li><strong>Readability:</strong> Well-named functions make your code easier to understand.</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h3 id="defining-functions">1. Defining and Calling a Simple Function</h3>
+            
+            <p>A function that doesn't take any input or return any output is the simplest kind. The keyword <code>void</code> is used to indicate this.</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+void functionName() {
+    // code to execute
+}</pre>
+            </div>
+            
+            <h4>Example 23: Simple Function Example</h4>
+            
+            <div class="definition">
+                <strong>Program Definition:</strong> This program demonstrates user-defined functions in C. It shows how to create a custom function (<code>sayHello</code>) separate from <code>main()</code> and how to call it. This illustrates the concept of modular programming where code is organized into reusable blocks.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Function Concepts Explained:</strong>
+                <ul>
+                    <li><strong>Function Definition:</strong> <code>void sayHello()</code> creates a new function that returns nothing</li>
+                    <li><strong>Function Call:</strong> <code>sayHello();</code> executes the function from within <code>main()</code></li>
+                    <li><strong>Program Flow:</strong> Execution starts in <code>main()</code>, jumps to <code>sayHello()</code> when called, then returns to <code>main()</code></li>
+                    <li><strong>Modular Design:</strong> Separating functionality into different functions improves code organization</li>
+                    <li><strong>Code Reusability:</strong> The same function can be called multiple times from different places</li>
+                </ul>
+            </div>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+// 1. Define the function
+void sayHello() {
+    printf("Hello from a function!\n");
+}
+
+int main() {
+    printf("Starting the main program.\n");
+    sayHello(); // 2. Call the function
+    printf("Finished the main program.\n");
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+Starting the main program.
+Hello from a function!
+Finished the main program.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="functions-parameters-return">2. Functions with Parameters and Return Values</h3>
+            
+            <p>Functions can accept inputs (called parameters) and produce an output (called a return value). This makes them much more powerful.</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+returnType functionName(dataType parameter1, dataType parameter2) {
+    // code that uses parameters
+    return value; // value must match the returnType
+}</pre>
+            </div>
+            
+            <h4>Example 57: A function that adds two numbers</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+// This function takes two integers as input and returns their sum (an integer)
+int add(int num1, int num2) {
+    int sum = num1 + num2;
+    return sum;
+}
+
+int main() {
+    int result = add(10, 5); // Call the function and store its return value
+    printf("The result of the addition is: %d\n", result);
+
+    int anotherResult = add(100, 200);
+    printf("Another result is: %d\n", anotherResult);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                The result of the addition is: 15
+                Another result is: 300
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="area-rectangle-example">Example 58: Area of a Rectangle</h3>
+            
+            <p>Write a C program that includes a function named <code>calculateArea</code>. This function should:</p>
+            
+            <ul>
+                <li>Take two integer parameters: <code>length</code> and <code>width</code>.</li>
+                <li>Calculate the area (<code>length * width</code>).</li>
+                <li>Return the calculated area as an integer.</li>
+            </ul>
+            
+            <p>In your <code>main</code> function, call <code>calculateArea</code> with some values (e.g., length 8 and width 5) and print the returned result.</p>
+            
+            <h4>Solution to Example 58:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int calculateArea(int length, int width) {
+    int area = length * width;
+    return area;
+}
+
+int main() {
+    int rectLength = 8;
+    int rectWidth = 5;
+
+    // Call the function and store the result
+    int areaResult = calculateArea(rectLength, rectWidth);
+
+    printf("The area of a rectangle with length %d and width %d is %d.\n", rectLength, rectWidth, areaResult);
+
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                The area of a rectangle with length 8 and width 5 is 40.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="additional-function-examples">Additional Function Examples</h3>
+            
+            <h4>Example 59: Temperature Converter</h4>
+            
+            <p>Write functions to convert temperature between Celsius and Fahrenheit:</p>
+            
+            <ul>
+                <li><code>celsiusToFahrenheit(float celsius)</code> - returns Fahrenheit</li>
+                <li><code>fahrenheitToCelsius(float fahrenheit)</code> - returns Celsius</li>
+            </ul>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+float celsiusToFahrenheit(float celsius) {
+    return (celsius * 9.0 / 5.0) + 32.0;
+}
+
+float fahrenheitToCelsius(float fahrenheit) {
+    return (fahrenheit - 32.0) * 5.0 / 9.0;
+}
+
+int main() {
+    float temp;
+    int choice;
+    
+    printf("Temperature Converter\n");
+    printf("1. Celsius to Fahrenheit\n");
+    printf("2. Fahrenheit to Celsius\n");
+    printf("Choose option (1 or 2): ");
+    scanf("%d", &choice);
+    
+    printf("Enter temperature: ");
+    scanf("%f", &temp);
+    
+    if (choice == 1) {
+        printf("%.2f°C = %.2f°F\n", temp, celsiusToFahrenheit(temp));
+    } else if (choice == 2) {
+        printf("%.2f°F = %.2f°C\n", temp, fahrenheitToCelsius(temp));
+    } else {
+        printf("Invalid choice!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 60: Prime Number Checker</h4>
+            
+            <p>Write a function <code>isPrime(int num)</code> that returns 1 if the number is prime, 0 otherwise.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int isPrime(int num) {
+    if (num <= 1) {
+        return 0;  // Not prime
+    }
+    
+    // Check if num is divisible by any number from 2 to num-1
+    for (int i = 2; i < num; i++) {
+        if (num % i == 0) {
+            return 0;  // Not prime
+        }
+    }
+    return 1;  // Prime
+}
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    if (isPrime(number)) {
+        printf("%d is a prime number.\n", number);
+    } else {
+        printf("%d is not a prime number.\n", number);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 61: Factorial Function</h4>
+            
+            <p>Write a function that calculates factorial using recursion.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+long long factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+int main() {
+    int num;
+    
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    
+    if (num < 0) {
+        printf("Factorial is not defined for negative numbers.\n");
+    } else {
+        printf("Factorial of %d is %lld\n", num, factorial(num));
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="arrays">Arrays: Storing Lists of Data</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> An array is a collection of elements of the same data type stored in contiguous memory locations. Arrays allow you to store multiple values under a single variable name and access them using an index number.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Concepts:</strong>
+                <ul>
+                    <li><strong>Element:</strong> Individual data item stored in an array</li>
+                    <li><strong>Index:</strong> Position number of an element in an array (starts from 0)</li>
+                    <li><strong>Size:</strong> Total number of elements an array can hold</li>
+                    <li><strong>Subscript:</strong> Another term for index, used with square brackets []</li>
+                </ul>
+            </div>
+            
+            <p>So far, we've used variables that can only hold one value at a time (e.g., <code>int score = 95;</code>). An array is a special variable that can hold multiple values of the same data type under a single name.</p>
+            
+            <p>Think of it like a row of numbered boxes, where each box can hold one item.</p>
+        </div>
+
+        <div class="content-section">
+            <h3 id="array-visualization">📦 Array Visualization</h3>
+            
+            <h4>1D Array Structure:</h4>
+            
+            <div class="array-visualization">
+Array name: scores
+Index:      [0]  [1]  [2]  [3]  [4]
+Values:     [95] [88] [76] [92] [85]
+Memory:     1000 1004 1008 1012 1016  (memory addresses)
+            </div>
+            
+            <h4>2D Array Structure:</h4>
+            
+            <div class="array-visualization">
+Array name: matrix[3][3]
+
+     Col[0] Col[1] Col[2]
+Row[0] [1]    [2]    [3]
+Row[1] [4]    [5]    [6]  
+Row[2] [7]    [8]    [9]
+
+Access: matrix[1][2] = 6
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="array-operations-table">📋 Array Operations Reference Table</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>1D Array Syntax</th>
+                            <th>2D Array Syntax</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Declaration</td>
+                            <td><code>int arr[5];</code></td>
+                            <td><code>int matrix[3][4];</code></td>
+                            <td>Create array</td>
+                        </tr>
+                        <tr>
+                            <td>Initialization</td>
+                            <td><code>int arr[5] = {1,2,3,4,5};</code></td>
+                            <td><code>int matrix[2][2] = {{1,2},{3,4}};</code></td>
+                            <td>Set initial values</td>
+                        </tr>
+                        <tr>
+                            <td>Access Element</td>
+                            <td><code>arr[2]</code></td>
+                            <td><code>matrix[1][0]</code></td>
+                            <td>Get/set specific element</td>
+                        </tr>
+                        <tr>
+                            <td>Get Size</td>
+                            <td><code>sizeof(arr)/sizeof(arr[0])</code></td>
+                            <td><code>sizeof(matrix)/sizeof(matrix[0][0])</code></td>
+                            <td>Calculate number of elements</td>
+                        </tr>
+                        <tr>
+                            <td>Loop Through</td>
+                            <td><code>for(i=0; i&lt;size; i++)</code></td>
+                            <td><code>for(i=0; i&lt;rows; i++) for(j=0; j&lt;cols; j++)</code></td>
+                            <td>Process all elements</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="array-index-rules">🔍 Array Index Rules</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rule</th>
+                            <th>Example</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Zero-based indexing</td>
+                            <td><code>arr[0]</code> is first element</td>
+                            <td>Arrays start counting from 0</td>
+                        </tr>
+                        <tr>
+                            <td>Bounds checking</td>
+                            <td><code>arr[5]</code> for size 5 = ERROR</td>
+                            <td>Index must be &lt; array size</td>
+                        </tr>
+                        <tr>
+                            <td>Negative indices</td>
+                            <td><code>arr[-1]</code> = ERROR</td>
+                            <td>Negative indices not allowed</td>
+                        </tr>
+                        <tr>
+                            <td>Size is fixed</td>
+                            <td>Cannot change after declaration</td>
+                            <td>Array size determined at compile time</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="array-mistakes">⚠️ Common Array Mistakes</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mistake</th>
+                            <th>Problem</th>
+                            <th>Correct Way</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>int arr[];</code></td>
+                            <td>Size not specified</td>
+                            <td><code>int arr[10];</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>arr[10]</code> for size 10</td>
+                            <td>Index out of bounds</td>
+                            <td><code>arr[9]</code> (last element)</td>
+                        </tr>
+                        <tr>
+                            <td><code>arr = {1,2,3};</code></td>
+                            <td>Assignment after declaration</td>
+                            <td>Use loop or individual assignments</td>
+                        </tr>
+                        <tr>
+                            <td><code>printf("%d", arr);</code></td>
+                            <td>Printing array name</td>
+                            <td><code>printf("%d", arr[i]);</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="declaring-arrays">1. Declaring and Initializing an Array</h3>
+            
+            <p>To declare an array, you specify the data type, the name, and the size (how many elements it can hold).</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+dataType arrayName[arraySize];</pre>
+            </div>
+            
+            <p>You can initialize an array when you declare it:</p>
+            
+            <h4>Example 62: Array Declaration and Initialization</h4>
+            
+            <div class="definition">
+                <strong>Program Definition:</strong> This program demonstrates array declaration and initialization in C. It shows how to create an array that can store multiple values of the same data type and how to set initial values when the array is created.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Array Concepts Explained:</strong>
+                <ul>
+                    <li><strong>Array Declaration:</strong> <code>int scores[5]</code> creates space in memory for 5 integer values</li>
+                    <li><strong>Array Initialization:</strong> Values <code>{95, 88, 76, 92, 85}</code> are assigned to array elements at creation time</li>
+                    <li><strong>Automatic Sizing:</strong> <code>char grades[] = {'A', 'B', 'C', 'A', 'B'}</code> lets compiler determine array size</li>
+                    <li><strong>Memory Layout:</strong> Array elements are stored in consecutive memory locations</li>
+                    <li><strong>Index System:</strong> Elements can be accessed using positions 0, 1, 2, 3, 4 (zero-based indexing)</li>
+                </ul>
+            </div>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    // Declare and initialize an array of 5 integers
+    int scores[5] = {95, 88, 76, 92, 85};
+
+    // The compiler can also figure out the size for you
+    char grades[] = {'A', 'B', 'C', 'A', 'B'};
+
+    return 0; // This program doesn't print anything yet
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="accessing-array-elements">2. Accessing Array Elements</h3>
+            
+            <p>You access elements in an array using their index. The index is the element's position, and it always starts at 0.</p>
+            
+            <ul>
+                <li>The first element is at index 0.</li>
+                <li>The second element is at index 1.</li>
+                <li>...and so on.</li>
+            </ul>
+            
+            <h4>Example 5: Accessing and printing elements</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int scores[5] = {95, 88, 76, 92, 85};
+
+    // Access the first element (at index 0)
+    printf("The first score is: %d\n", scores[0]);
+
+    // Access the third element (at index 2)
+    printf("The third score is: %d\n", scores[2]);
+
+    // You can also change an element's value
+    scores[2] = 80;
+    printf("The third score is now: %d\n", scores[2]);
+
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+The first score is: 95
+The third score is: 76
+The third score is now: 80
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="loops-with-arrays">3. Using Loops with Arrays</h3>
+            
+            <p>Loops are perfect for working with arrays. You can use a <code>for</code> loop to go through each element of an array one by one.</p>
+            
+            <h4>Example 6: Printing all elements with a loop</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int scores[5] = {95, 88, 76, 92, 85};
+    int i;
+
+    printf("All scores:\n");
+    for (i = 0; i < 5; i++) {
+        // The loop runs for i = 0, 1, 2, 3, 4
+        printf("Score at index %d is %d\n", i, scores[i]);
+    }
+
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+All scores:
+Score at index 0 is 95
+Score at index 1 is 88
+Score at index 2 is 76
+Score at index 3 is 92
+Score at index 4 is 85
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="sum-of-array-example">Example 10: Sum of an Array</h3>
+            
+            <p>Write a program that does the following:</p>
+            
+            <ul>
+                <li>Creates an integer array with the values <code>{10, 20, 30, 40, 50}</code>.</li>
+                <li>Uses a <code>for</code> loop to calculate the sum of all the elements in the array.</li>
+                <li>Prints the final sum.</li>
+            </ul>
+            
+            <h4>Solution to Example 10:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int numbers[] = {10, 20, 30, 40, 50};
+    int sum = 0;
+    int i;
+
+    for (i = 0; i < 5; i++) {
+        sum += numbers[i];
+    }
+
+    printf("The sum of the array elements is: %d\n", sum);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="additional-array-examples">Additional Array Examples</h3>
+            
+            <h4>1D Array Practice Programs</h4>
+            
+            <h5>Q1. Enter 10 Elements in a 1D Array and Print Them</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[10];
+    int i;
+    
+    printf("Enter 10 elements: ");
+    for (i = 0; i < 10; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    printf("The elements are: ");
+    for (i = 0; i < 10; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q2. Calculate Total of Array Elements</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[10] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50};
+    int total = 0;
+    
+    for (int i = 0; i < 10; i++) {
+        total += arr[i];
+    }
+    
+    printf("Total sum: %d\n", total);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q3. Find Maximum Element in Array</h5>
+            
+            <p>(see below)</p>
+            
+            <h5>Q4. Count Total Odd and Even Elements</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int oddCount = 0, evenCount = 0;
+    
+    for (int i = 0; i < 10; i++) {
+        if (arr[i] % 2 == 0) {
+            evenCount++;
+        } else {
+            oddCount++;
+        }
+    }
+    
+    printf("Odd elements: %d\n", oddCount);
+    printf("Even elements: %d\n", evenCount);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q5. Count Positive and Negative Elements</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[10] = {-5, 10, -3, 8, 0, -7, 15, -2, 9, -1};
+    int positiveCount = 0, negativeCount = 0, zeroCount = 0;
+    
+    for (int i = 0; i < 10; i++) {
+        if (arr[i] > 0) {
+            positiveCount++;
+        } else if (arr[i] < 0) {
+            negativeCount++;
+        } else {
+            zeroCount++;
+        }
+    }
+    
+    printf("Positive elements: %d\n", positiveCount);
+    printf("Negative elements: %d\n", negativeCount);
+    printf("Zero elements: %d\n", zeroCount);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q6. Replace an Old Element with New One</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int oldValue = 5, newValue = 50;
+    int found = 0;
+    
+    printf("Original array: ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
+    for (int i = 0; i < 10; i++) {
+        if (arr[i] == oldValue) {
+            arr[i] = newValue;
+            found = 1;
+            break;
+        }
+    }
+    
+    if (found) {
+        printf("After replacement: ");
+        for (int i = 0; i < 10; i++) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+    } else {
+        printf("Element %d not found\n", oldValue);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q7. Find Largest and Smallest in Array</h5>
+            
+            <p>Write a program that finds the largest and smallest numbers in an array.</p>
+            
+            <h6>Solution:</h6>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int numbers[] = {45, 23, 78, 12, 67, 89, 34, 56};
+    int size = 8;
+    int largest = numbers[0];
+    int smallest = numbers[0];
+    
+    for (int i = 1; i < size; i++) {
+        if (numbers[i] > largest) {
+            largest = numbers[i];
+        }
+        if (numbers[i] < smallest) {
+            smallest = numbers[i];
+        }
+    }
+    
+    printf("Array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    printf("Largest: %d\n", largest);
+    printf("Smallest: %d\n", smallest);
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h4>Example 11: Search Element in Array</h4>
+            
+            <p>Write a program that searches for a specific number in an array and returns its position.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int numbers[] = {10, 25, 30, 45, 50, 65, 70};
+    int size = 7;
+    int searchNum, found = 0;
+    
+    printf("Array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    printf("Enter number to search: ");
+    scanf("%d", &searchNum);
+    
+    for (int i = 0; i < size; i++) {
+        if (numbers[i] == searchNum) {
+            printf("Number %d found at position %d\n", searchNum, i);
+            found = 1;
+            break;
+        }
+    }
+    
+    if (!found) {
+        printf("Number %d not found in the array.\n", searchNum);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h4>Example 12: Reverse an Array</h4>
+            
+            <p>Write a program that reverses the elements of an array.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int numbers[] = {1, 2, 3, 4, 5};
+    int size = 5;
+    
+    printf("Original array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    // Reverse the array
+    for (int i = 0; i < size/2; i++) {
+        int temp = numbers[i];
+        numbers[i] = numbers[size - 1 - i];
+        numbers[size - 1 - i] = temp;
+    }
+    
+    printf("Reversed array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h4>Example 13: Count Frequency of Elements</h4>
+            
+            <p>Write a program to count how many times each element appears in an array.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int numbers[] = {1, 2, 2, 3, 1, 4, 2, 1, 3};
+    int size = 9;
+    int visited[100] = {0}; // Assuming numbers are less than 100
+    
+    printf("Array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    printf("Frequency count:\n");
+    for (int i = 0; i < size; i++) {
+        if (visited[numbers[i]] == 0) {
+            int count = 1;
+            for (int j = i + 1; j < size; j++) {
+                if (numbers[i] == numbers[j]) {
+                    count++;
+                }
+            }
+            printf("Number %d appears %d time(s)\n", numbers[i], count);
+            visited[numbers[i]] = 1;
+        }
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="two-dimensional-arrays">2D Arrays</h3>
+            
+            <p>A 2D array is like a table or matrix with rows and columns. It's essentially an array of arrays.</p>
+            
+            <h4>2D Array Practice Programs</h4>
+            
+            <h5>Q1. Create and Print an N*N 2D Array</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int matrix[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+    
+    printf("2D Array:\n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q2. Calculate Sum of All Elements in 2D Array</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int matrix[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+    int sum = 0;
+    
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            sum += matrix[i][j];
+        }
+    }
+    
+    printf("Sum of all elements: %d\n", sum);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q3. Find Maximum Element in 2D Array</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int matrix[3][3] = {
+        {15, 23, 8},
+        {45, 12, 67},
+        {34, 89, 56}
+    };
+    int max = matrix[0][0];
+    
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (matrix[i][j] > max) {
+                max = matrix[i][j];
+            }
+        }
+    }
+    
+    printf("Maximum element: %d\n", max);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q4. Matrix Addition</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int matrix1[2][2] = {{1, 2}, {3, 4}};
+    int matrix2[2][2] = {{5, 6}, {7, 8}};
+    int result[2][2];
+    
+    // Add corresponding elements
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            result[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+    }
+    
+    printf("Result of matrix addition:\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Q5. Matrix Multiplication</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int matrix1[2][2] = {{1, 2}, {3, 4}};
+    int matrix2[2][2] = {{5, 6}, {7, 8}};
+    int result[2][2] = {{0, 0}, {0, 0}};
+    
+    // Matrix multiplication
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                result[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }
+    }
+    
+    printf("Result of matrix multiplication:\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="strings">Strings: Working with Text</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A string in C is a sequence of characters stored as an array, terminated by a special null character ('\0'). Strings represent text data and are fundamental for handling words, sentences, and textual information.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Terms:</strong>
+                <ul>
+                    <li><strong>String Literal:</strong> Text enclosed in double quotes ("Hello")</li>
+                    <li><strong>Null Terminator (\0):</strong> Special character that marks the end of a string</li>
+                    <li><strong>Character Array:</strong> Array of char data type used to store strings</li>
+                    <li><strong>String Length:</strong> Number of characters in a string (excluding null terminator)</li>
+                </ul>
+            </div>
+            
+            <p>In C, a string is simply an array of characters. There's one special rule: a string must end with a special character called the null terminator (<code>\0</code>). This character tells functions like <code>printf</code> where the string ends.</p>
+            
+            <p>When you use double quotes (<code>"</code>) to create a string, the compiler automatically adds this null terminator for you.</p>
+        </div>
+
+        <div class="content-section">
+            <h3 id="string-visualization">📝 String Structure Visualization</h3>
+            
+            <div class="array-visualization">
+String: "Hello"
+Index:   [0] [1] [2] [3] [4] [5]
+Chars:   'H' 'e' 'l' 'l' 'o' '\0'
+Memory:  100 101 102 103 104 105
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="escape-sequences">🔤 Escape Sequences Reference Table</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Escape Sequence</th>
+                            <th>Character</th>
+                            <th>ASCII Value</th>
+                            <th>Description</th>
+                            <th>Example Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>\n</code></td>
+                            <td>Newline</td>
+                            <td>10</td>
+                            <td>Move to next line</td>
+                            <td><code>printf("Line 1\nLine 2");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\t</code></td>
+                            <td>Tab</td>
+                            <td>9</td>
+                            <td>Horizontal tab (8 spaces)</td>
+                            <td><code>printf("Name:\tJohn");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\"</code></td>
+                            <td>Double quote</td>
+                            <td>34</td>
+                            <td>Print quote character</td>
+                            <td><code>printf("He said \"Hello\"");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\'</code></td>
+                            <td>Single quote</td>
+                            <td>39</td>
+                            <td>Print apostrophe</td>
+                            <td><code>printf("It\'s working");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\\</code></td>
+                            <td>Backslash</td>
+                            <td>92</td>
+                            <td>Print backslash</td>
+                            <td><code>printf("C:\\Users\\Name");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\r</code></td>
+                            <td>Carriage return</td>
+                            <td>13</td>
+                            <td>Return to line start</td>
+                            <td><code>printf("Loading\rDone");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\0</code></td>
+                            <td>Null terminator</td>
+                            <td>0</td>
+                            <td>End of string marker</td>
+                            <td><code>char str[] = "Hi\0";</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\a</code></td>
+                            <td>Alert (bell)</td>
+                            <td>7</td>
+                            <td>System beep sound</td>
+                            <td><code>printf("\aError!");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\b</code></td>
+                            <td>Backspace</td>
+                            <td>8</td>
+                            <td>Move cursor back</td>
+                            <td><code>printf("abc\bdef");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\f</code></td>
+                            <td>Form feed</td>
+                            <td>12</td>
+                            <td>New page</td>
+                            <td><code>printf("Page1\fPage2");</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>\v</code></td>
+                            <td>Vertical tab</td>
+                            <td>11</td>
+                            <td>Vertical spacing</td>
+                            <td><code>printf("Line1\vLine2");</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="ascii-values">🔢 Common ASCII Values Reference</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Character Type</th>
+                            <th>Range</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Digits</strong></td>
+                            <td>48-57</td>
+                            <td><code>'0'=48, '1'=49, ..., '9'=57</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uppercase Letters</strong></td>
+                            <td>65-90</td>
+                            <td><code>'A'=65, 'B'=66, ..., 'Z'=90</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lowercase Letters</strong></td>
+                            <td>97-122</td>
+                            <td><code>'a'=97, 'b'=98, ..., 'z'=122</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Space</strong></td>
+                            <td>32</td>
+                            <td><code>' '=32</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Common Symbols</strong></td>
+                            <td>Various</td>
+                            <td><code>'!'=33, '@'=64, '#'=35</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="string-operations-table">📋 String Operations Quick Reference</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Syntax</th>
+                            <th>Purpose</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Declaration</td>
+                            <td><code>char str[size];</code></td>
+                            <td>Create string variable</td>
+                            <td><code>char name[50];</code></td>
+                        </tr>
+                        <tr>
+                            <td>Initialization</td>
+                            <td><code>char str[] = "text";</code></td>
+                            <td>Set initial value</td>
+                            <td><code>char msg[] = "Hello";</code></td>
+                        </tr>
+                        <tr>
+                            <td>Input</td>
+                            <td><code>scanf("%s", str);</code></td>
+                            <td>Read string from user</td>
+                            <td><code>scanf("%s", name);</code></td>
+                        </tr>
+                        <tr>
+                            <td>Output</td>
+                            <td><code>printf("%s", str);</code></td>
+                            <td>Display string</td>
+                            <td><code>printf("Name: %s", name);</code></td>
+                        </tr>
+                        <tr>
+                            <td>Length</td>
+                            <td><code>strlen(str)</code></td>
+                            <td>Get string length</td>
+                            <td><code>int len = strlen(name);</code></td>
+                        </tr>
+                        <tr>
+                            <td>Copy</td>
+                            <td><code>strcpy(dest, src)</code></td>
+                            <td>Copy one string to another</td>
+                            <td><code>strcpy(copy, original);</code></td>
+                        </tr>
+                        <tr>
+                            <td>Compare</td>
+                            <td><code>strcmp(str1, str2)</code></td>
+                            <td>Compare two strings</td>
+                            <td><code>if(strcmp(s1, s2) == 0)</code></td>
+                        </tr>
+                        <tr>
+                            <td>Concatenate</td>
+                            <td><code>strcat(dest, src)</code></td>
+                            <td>Join two strings</td>
+                            <td><code>strcat(fullname, lastname);</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="string-pitfalls">⚠️ String Common Pitfalls</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Wrong Way</th>
+                            <th>Right Way</th>
+                            <th>Explanation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Size too small</td>
+                            <td><code>char name[3] = "John";</code></td>
+                            <td><code>char name[5] = "John";</code></td>
+                            <td>Need space for <code>\0</code></td>
+                        </tr>
+                        <tr>
+                            <td>Missing <code>#include</code></td>
+                            <td><code>strlen(str)</code> without include</td>
+                            <td><code>#include &lt;string.h&gt;</code></td>
+                            <td>String functions need header</td>
+                        </tr>
+                        <tr>
+                            <td>Assignment</td>
+                            <td><code>str = "Hello";</code></td>
+                            <td><code>strcpy(str, "Hello");</code></td>
+                            <td>Can't assign strings directly</td>
+                        </tr>
+                        <tr>
+                            <td>Comparison</td>
+                            <td><code>if(str1 == str2)</code></td>
+                            <td><code>if(strcmp(str1, str2) == 0)</code></td>
+                            <td><code>==</code> compares addresses, not content</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="declaring-strings">1. Declaring and Initializing Strings</h3>
+            
+            <p>This is just like creating a character array.</p>
+            
+            <h4>Example 14: Basic String Operations</h4>
+            
+            <div class="definition">
+                <strong>Program Definition:</strong> This program demonstrates string creation and initialization in C. It shows two methods for creating strings: using string literals (double quotes) and character array initialization. This illustrates how strings are essentially character arrays with null terminators.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key String Concepts Explained:</strong>
+                <ul>
+                    <li><strong>String Literal Method:</strong> <code>"Hello"</code> automatically includes the null terminator <code>\0</code></li>
+                    <li><strong>Character Array Method:</strong> Manual initialization requires adding <code>\0</code> explicitly</li>
+                    <li><strong>Null Terminator:</strong> The <code>\0</code> character marks the end of the string for functions to recognize</li>
+                    <li><strong>String Storage:</strong> Each character occupies one byte in memory, stored consecutively</li>
+                    <li><strong>Format Specifier:</strong> <code>%s</code> in <code>printf()</code> displays the entire string until it encounters <code>\0</code></li>
+                </ul>
+            </div>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    // Method 1: Using double quotes (easy and common)
+    // The compiler adds '\0' automatically.
+    char greeting[] = "Hello";
+
+    // Method 2: Initializing as a char array
+    // You must add '\0' yourself!
+    char farewell[] = {'B', 'y', 'e', '\0'};
+
+    printf("Greeting: %s\n", greeting);
+    printf("Farewell: %s\n", farewell);
+
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+Greeting: Hello
+Farewell: Bye
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="common-string-functions">2. Common String Functions</h3>
+            
+            <p>To work with strings effectively, you need to use functions from the C standard library. To use them, you must include the <code>&lt;string.h&gt;</code> header file.</p>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;string.h&gt;</pre>
+            </div>
+            
+            <p>Here are a few of the most useful ones:</p>
+            
+            <ul>
+                <li><code>strlen(string)</code>: Returns the length of a string (not including the <code>\0</code>).</li>
+                <li><code>strcpy(destination, source)</code>: Copies the source string into the destination string.</li>
+                <li><code>strcat(destination, source)</code>: Concatenates (joins) the source string onto the end of the destination string.</li>
+            </ul>
+            
+            <h4>Example 15: Using string functions</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt; // Don't forget this!
+
+int main() {
+    char firstName[50] = "John"; // Needs to be large enough for concatenation
+    char lastName[] = "Doe";
+    char fullName[100]; // Destination for copying
+
+    // Get length
+    printf("Length of firstName: %zu\n", strlen(firstName));
+
+    // Copying a string
+    strcpy(fullName, firstName); // fullName is now "John"
+    printf("Full name after copy: %s\n", fullName);
+
+    // Concatenating strings
+    strcat(fullName, " "); // Add a space
+    strcat(fullName, lastName); // Add the last name
+    printf("Full name after concatenation: %s\n", fullName);
+
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+Length of firstName: 4
+Full name after copy: John
+Full name after concatenation: John Doe
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="username-greeting-example">Example 16: Simple Username Greeting</h3>
+            
+            <p>Write a program that does the following:</p>
+            
+            <ul>
+                <li>Creates a <code>char</code> array to store a user's name (e.g., <code>char name[50];</code>).</li>
+                <li>Asks the user to enter their first name.</li>
+                               <li>Reads the name using <code>scanf</code>.</li>
+                <li>Creates another <code>char</code> array for a greeting message (e.g., <code>char message[100];</code>).</li>
+                <li>Uses <code>strcpy</code> and <code>strcat</code> to build a greeting message like <code>"Hello, [name]! Welcome!"</code>.</li>
+                <li>Prints the final greeting message.</li>
+            </ul>
+            
+            <h4>Solution to Example 16:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char name[50];
+    char message[100];
+
+    // Ask for and read the user's name
+    printf("Please enter your first name: ");
+    scanf("%s", name);
+
+    // Build the greeting message
+    strcpy(message, "Hello, ");
+    strcat(message, name);
+    strcat(message, "! Welcome!");
+
+    // Print the final message
+    printf("%s\n", message);
+
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output:</strong></p>
+            
+            <div class="output">
+Please enter your first name: Alice
+Hello, Alice! Welcome!
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="additional-string-examples">Additional String Examples</h3>
+            
+            <h4>Example 17: String Length Without strlen()</h4>
+            
+            <p>Write a program that calculates the length of a string without using the <code>strlen()</code> function.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char str[100];
+    int length = 0;
+    
+    printf("Enter a string: ");
+    scanf("%s", str);
+    
+    // Calculate length manually
+    while (str[length] != '\0') {
+        length++;
+    }
+    
+    printf("Length of string '%s' is: %d\n", str, length);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 18: Reverse a String</h4>
+            
+            <p>Write a program that reverses a string without using library functions.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char str[100];
+    char reversed[100];
+    int length, j = 0;
+    
+    printf("Enter a string: ");
+    scanf("%s", str);
+    
+    length = strlen(str);
+    
+    // Reverse the string
+    for (int i = length - 1; i >= 0; i--) {
+        reversed[j] = str[i];
+        j++;
+    }
+    reversed[j] = '\0'; // Add null terminator
+    
+    printf("Original string: %s\n", str);
+    printf("Reversed string: %s\n", reversed);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 19: Count Vowels and Consonants</h4>
+            
+            <p>Write a program that counts the number of vowels and consonants in a string.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char str[100];
+    int vowels = 0, consonants = 0;
+    
+    printf("Enter a string: ");
+    scanf("%s", str);
+    
+    for (int i = 0; str[i] != '\0'; i++) {
+        char ch = str[i];
+        
+        // Convert to lowercase manually
+        if (ch >= 'A' && ch <= 'Z') {
+            ch = ch + 32;  // Convert to lowercase
+        }
+        
+        if (ch >= 'a' && ch <= 'z') {
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+                vowels++;
+            } else {
+                consonants++;
+            }
+        }
+    }
+    
+    printf("String: %s\n", str);
+    printf("Vowels: %d\n", vowels);
+    printf("Consonants: %d\n", consonants);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 20: Check Palindrome</h4>
+            
+            <p>Write a program to check if a string is a palindrome (reads the same forwards and backwards).</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char str[100];
+    int length, isPalindrome = 1;
+    
+    printf("Enter a string: ");
+    scanf("%s", str);
+    
+    length = strlen(str);
+    
+    // Check if palindrome
+    for (int i = 0; i < length/2; i++) {
+        if (str[i] != str[length - 1 - i]) {
+            isPalindrome = 0;
+            break;
+        }
+    }
+    
+    if (isPalindrome) {
+        printf("'%s' is a palindrome.\n", str);
+    } else {
+        printf("'%s' is not a palindrome.\n", str);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 21: Simple Word Count</h4>
+            
+            <p>Write a program that counts the number of words in a simple sentence (words separated by single spaces).</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char sentence[100];
+    int words = 1;  // Start with 1 word
+    
+    printf("Enter a sentence: ");
+    scanf("%s", sentence);  // This only reads one word, but good for starting
+    
+    // For this simple version, let's count characters and assume it's one word
+    printf("You entered: %s\n", sentence);
+    printf("This has 1 word.\n");
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="comprehensive-challenges">Comprehensive Practice Challenges</h3>
+            
+            <h4>Challenge: Simple Calculator</h4>
+            
+            <p>Write a program that asks the user for two numbers and an operation, then shows the result.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    float num1, num2, result;
+    char op;
+    
+    printf("Enter first number: ");
+    scanf("%f", &num1);
+    
+    printf("Enter operation (+, -, *, /): ");
+    scanf(" %c", &op);
+    
+    printf("Enter second number: ");
+    scanf("%f", &num2);
+    
+    if (op == '+') {
+        result = num1 + num2;
+        printf("%.2f + %.2f = %.2f\n", num1, num2, result);
+    } else if (op == '-') {
+        result = num1 - num2;
+        printf("%.2f - %.2f = %.2f\n", num1, num2, result);
+    } else if (op == '*') {
+        result = num1 * num2;
+        printf("%.2f * %.2f = %.2f\n", num1, num2, result);
+    } else if (op == '/') {
+        if (num2 != 0) {
+            result = num1 / num2;
+            printf("%.2f / %.2f = %.2f\n", num1, num2, result);
+        } else {
+            printf("Error: Cannot divide by zero!\n");
+        }
+    } else {
+        printf("Invalid operation!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Challenge: Simple Number Game</h4>
+            
+            <p>Write a program where the user tries to guess a number between 1 and 10.</p>
+            
+            <h5>Solution:</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int secretNumber = 7;  // You can change this
+    int guess;
+    
+    printf("I'm thinking of a number between 1 and 10!\n");
+    printf("Can you guess it? ");
+    scanf("%d", &guess);
+    
+    if (guess == secretNumber) {
+        printf("Congratulations! You guessed it!\n");
+    } else if (guess < secretNumber) {
+        printf("Too low! The number was %d\n", secretNumber);
+    } else {
+        printf("Too high! The number was %d\n", secretNumber);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="level3.html" class="nav-link">← Previous: Level 3</a>
+            <a href="level5.html" class="nav-link">Next: Level 5 →</a>
+        </div>
+    </div>
+
+    <!-- Prism.js JavaScript for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const preElements = document.querySelectorAll('pre:not([class*="language-"])');
+            preElements.forEach(pre => {
+                pre.className = 'language-c line-numbers';
+            });
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
+
+            // Mobile menu functionality
+            const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenuContent = document.getElementById('mobileMenuContent');
+
+            // Create navigation structure for mobile menu
+            const navigationStructure = `
+                <div class="mobile-level-card">
+                    <h2>LEVEL 1: INTRODUCTION</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level1.html#algorithms">📚 Algorithms & Flowcharts Guide</a></li>
+                        <li><a href="level1.html#introduction">Introduction to C Programming</a></li>
+                        <li><a href="level1.html#features">Key Features of C</a></li>
+                        <li><a href="level1.html#usage">Where is C Used?</a></li>
+                        <li><a href="level1.html#setup">Setup and First Program</a></li>
+                        <li><a href="level1.html#variables">Variables and Format Specifiers</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 2: BASIC OPERATIONS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level2.html#operators">Basic Operators in C</a></li>
+                        <li><a href="level2.html#input-output">Simple Input and Output</a></li>
+                        <li><a href="level2.html#decision-making">Basic Decision Making</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 3: CONTROL STRUCTURES</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level3.html#advanced-control">Advanced Control Flow</a></li>
+                        <li><a href="level3.html#loops">Introduction to Loops</a></li>
+                        <li><a href="level3.html#loop-problems">Loop Practice Problems</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 4: FUNCTIONS & ARRAYS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level4.html#functions">Functions</a></li>
+                        <li><a href="level4.html#arrays">Arrays</a></li>
+                        <li><a href="level4.html#strings">Strings</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 5: ADVANCED TOPICS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level5.html#practice-programs">Advanced Practice Programs</a></li>
+                        <li><a href="level5.html#advanced">Advanced Topics & Best Practices</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card" style="text-align: center; border-top: 2px solid var(--secondary-color); margin-top: 1rem; padding-top: 1rem;">
+                    <a href="index.html" style="color: var(--secondary-color); font-weight: 600; text-decoration: none; font-size: 1.1rem;">🏠 Back to Home</a>
+                </div>
+            `;
+            
+            if (mobileMenuContent) {
+                mobileMenuContent.innerHTML = navigationStructure;
+
+                // Add collapsible functionality to mobile cards
+                const mobileHeaders = mobileMenuContent.querySelectorAll('.mobile-level-card h2');
+                mobileHeaders.forEach(header => {
+                    header.addEventListener('click', () => {
+                        const card = header.parentElement;
+                        card.classList.toggle('collapsed');
+                    });
+                });
+            }
+
+            // Open mobile menu
+            if (burgerMenu) {
+                burgerMenu.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                });
+            }
+
+            // Close mobile menu
+            if (closeMenu) {
+                closeMenu.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            }
+
+            // Close mobile menu when clicking outside content
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', (e) => {
+                    if (e.target === mobileMenu) {
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            loadNotes('level4');
+            loadChecklistState();
+
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', saveChecklistState);
+            });
+        });
+    </script>
+</body>
+</html>

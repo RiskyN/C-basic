@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2: Basic Operations in C</title>
+    
+    <!-- Prism.js CSS for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-link::before {
+            content: "←";
+            margin-right: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        h3 {
+            color: var(--dark-color);
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .definition {
+            background-color: #e3f2fd;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .key-terms {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .program-example {
+            background-color: #2d2d2d;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .program-example pre {
+            color: #f8f8f2;
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .output {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            white-space: pre-line;
+        }
+
+        .challenge {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Enhanced Code Styling */
+        pre[class*="language-"] {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        :not(pre) > code {
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)) !important;
+            color: #3498db !important;
+            padding: 0.2em 0.4em !important;
+            border-radius: 6px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.85em !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(52, 152, 219, 0.2) !important;
+        }
+
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .line-numbers-rows > span:before {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .program-example {
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-example pre {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            color: #f8f8f2 !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            overflow-x: auto !important;
+        }
+
+        .output {
+            background: linear-gradient(145deg, #0f3460, #16537e) !important;
+            color: #00ff00 !important;
+            padding: 1.5rem !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            border-radius: 0 0 15px 15px !important;
+            border-top: 2px solid rgba(0, 255, 0, 0.3) !important;
+        }
+
+        /* Burger menu styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 110;
+        }
+
+        .burger-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .burger-bar {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), #fff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .mobile-level-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-level-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-level-card h2::after {
+            content: "▼";
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-level-card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .mobile-topic-list {
+            list-style-type: none;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .mobile-level-card.collapsed .mobile-topic-list {
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .mobile-topic-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-topic-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-topic-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-topic-list a:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            color: var(--secondary-color);
+        }
+        
+        .mobile-topic-list a::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .toc {
+            list-style-type: decimal;
+            padding-left: 2rem;
+        }
+        .toc li {
+            margin-bottom: 0.8rem;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+        .toc a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="burger-menu" id="burgerMenu">
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+        </div>
+        <div class="header-content">
+            <a href="index.html" class="back-link">Back to Home</a>
+            <h1>LEVEL 2: BASIC OPERATIONS</h1>
+            <div style="width: 100px;"></div> <!-- Spacer for alignment -->
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="close-menu" id="closeMenu">&times;</span>
+        <div class="mobile-menu-content" id="mobileMenuContent">
+            <!-- Mobile menu content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <div class="key-terms">
+                <strong>What You'll Learn in This Level:</strong>
+                <ul>
+                    <li>How to get input from the user with <code>scanf()</code>.</li>
+                    <li>How to use basic math operators (<code>+</code>, <code>-</code>, <code>*</code>, - <code>/</code>, <code>%</code>).</li>
+                    <li>How to make decisions in your code with <code>if</code>, <code>if-else</code>, and <code>if-else if-else</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="operators">Basic Operators in C</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> An operator is a symbol that tells the compiler to perform specific mathematical, logical, or relational operations on operands (values or variables). Operators are the building blocks for creating expressions and performing calculations in C.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Terms:</strong>
+                <ul>
+                    <li><strong>Operand:</strong> The values or variables on which an operation is performed</li>
+                    <li><strong>Expression:</strong> A combination of operators and operands that evaluates to a value</li>
+                    <li><strong>Precedence:</strong> The order in which operations are performed</li>
+                </ul>
+            </div>
+            
+            <p>Let's start with the simplest operations in C programming. We'll begin with very basic examples and gradually work our way up to more complex ones.</p>
+            
+            <h3>SUPER EASY START: Your First Calculation</h3>
+            
+            <p>Before we learn about different types of operators, let's start with the most basic math:</p>
+            
+            <div class="definition">
+                <strong>Program Definition:</strong> This program demonstrates arithmetic operations in C by performing a simple addition and displaying the result. It shows how C can evaluate mathematical expressions directly within the <code>printf()</code> function.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Programming Concepts:</strong>
+                <ul>
+                    <li><strong>Arithmetic Expression:</strong> <code>2 + 3</code> is evaluated at compile time and replaced with the result</li>
+                    <li><strong>Format Specifier:</strong> <code>%d</code> tells <code>printf()</code> to expect an integer value</li>
+                    <li><strong>Direct Calculation:</strong> The math is performed automatically by the compiler</li>
+                    <li><strong>Immediate Output:</strong> Result is calculated and displayed in one statement</li>
+                </ul>
+            </div>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("2 + 3 = %d\n", 2 + 3);
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+2 + 3 = 5
+            </div>
+            
+            <p><strong>Congratulations!</strong> You just did your first calculation in C!</p>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level2a">LEVEL 2A: Simple Math with Numbers</h3>
+            
+            <p>Now let's try a few more basic calculations:</p>
+            
+            <h4>Example 10: Basic Addition</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("5 + 7 = %d\n", 5 + 7);
+    printf("10 + 15 = %d\n", 10 + 15);
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+5 + 7 = 12
+10 + 15 = 25
+            </div>
+            
+            <h4>Example 11: Basic Subtraction</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("10 - 3 = %d\n", 10 - 3);
+    printf("20 - 8 = %d\n", 20 - 8);
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+10 - 3 = 7
+20 - 8 = 12
+            </div>
+            
+            <h4>Example 12: Basic Multiplication</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("4 * 5 = %d\n", 4 * 5);
+    printf("3 * 7 = %d\n", 3 * 7);
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+4 * 5 = 20
+3 * 7 = 21
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level2b">LEVEL 2B: Using Variables for Math</h3>
+            
+            <p>Now let's store numbers in variables and then do math:</p>
+            
+            <h4>Example 13: Addition with Variables</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int first_number = 10;
+    int second_number = 5;
+    int answer = first_number + second_number;
+    
+    printf("First number: %d\n", first_number);
+    printf("Second number: %d\n", second_number);
+    printf("Answer: %d\n", answer);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+First number: 10
+Second number: 5
+Answer: 15
+            </div>
+            
+            <h4>Example 14: All Basic Operations</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 12;
+    int b = 4;
+    
+    printf("a = %d, b = %d\n", a, b);
+    printf("a + b = %d\n", a + b);
+    printf("a - b = %d\n", a - b);
+    printf("a * b = %d\n", a * b);
+    printf("a / b = %d\n", a / b);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+a = 12, b = 4
+a + b = 16
+a - b = 8
+a * b = 48
+a / b = 3
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level2c">LEVEL 2C: Simple Input and Math</h3>
+            
+            <p>Let's ask the user for numbers and do math with them:</p>
+            
+            <h4>Example 15: Add Two Numbers from User</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num1, num2, sum;
+    
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+    
+    sum = num1 + num2;
+    printf("Sum = %d\n", sum);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output:</strong></p>
+            
+            <div class="output">
+Enter first number: 15
+Enter second number: 25
+Sum = 40
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level2d">LEVEL 2D: Understanding Operator Types</h3>
+            
+            <p>Now that you're comfortable with basic math, let's learn about different types of operators:</p>
+            
+            <h4>Arithmetic Operators (Math Symbols)</h4>
+            
+            <div class="definition">
+                <strong>Important Note:</strong> In C programming, you must use the exact symbols shown below. Don't use mathematical symbols like × or ÷ - they won't work in C code!
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>What it Does</th>
+                            <th>Example</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>+</code></td>
+                            <td>Addition</td>
+                            <td><code>5 + 3</code></td>
+                            <td><code>8</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>-</code></td>
+                            <td>Subtraction</td>
+                            <td><code>5 - 3</code></td>
+                            <td><code>2</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>*</code></td>
+                            <td>Multiplication</td>
+                            <td><code>5 * 3</code></td>
+                            <td><code>15</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>/</code></td>
+                            <td>Division</td>
+                            <td><code>6 / 3</code></td>
+                            <td><code>2</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>%</code></td>
+                            <td>Remainder</td>
+                            <td><code>7 % 3</code></td>
+                            <td><code>1</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h4>Example 16: Understanding Remainder (%)</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("7 / 3 = %d remainder %d\n", 7/3, 7%3);
+    printf("10 / 4 = %d remainder %d\n", 10/4, 10%4);
+    printf("15 / 5 = %d remainder %d\n", 15/5, 15%5);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+7 / 3 = 2 remainder 1
+10 / 4 = 2 remainder 2
+15 / 5 = 3 remainder 0
+            </div>
+            
+            <div class="key-terms">
+                <strong>Remember for Students:</strong>
+                <ul>
+                    <li><strong>Use * (asterisk)</strong> for multiplication in C, NOT × (times symbol)</li>
+                    <li><strong>Use / (slash)</strong> for division in C, NOT ÷ (division symbol)</li>
+                    <li><strong>The output shows exactly what C will print</strong> - no fancy symbols!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="decision-making">LEVEL 2E: Simple Comparisons</h3>
+            
+            <p>Let's learn to compare numbers:</p>
+            
+            <h4>Example 17: Is One Number Bigger?</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10;
+    int b = 5;
+    
+    printf("Is %d bigger than %d? %d\n", a, b, a > b);
+    printf("Is %d equal to %d? %d\n", a, b, a == b);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+Is 10 bigger than 5? 1
+Is 10 equal to 5? 0
+            </div>
+            
+            <div class="definition">
+                <strong>Note:</strong> In C, <code>1</code> means TRUE and <code>0</code> means FALSE
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="input-output">Simple Input and Output</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> Input refers to data entered into a program (usually from keyboard), while output refers to data displayed by the program (usually to screen). In C, we use <code>scanf()</code> for input and <code>printf()</code> for output.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Functions:</strong>
+                <ul>
+                    <li><strong>printf():</strong> Displays formatted output to the screen</li>
+                    <li><strong>scanf():</strong> Reads formatted input from the keyboard</li>
+                    <li><strong>Format Specifier:</strong> Tells the function what type of data to expect (%d for int, %f for float, etc.)</li>
+                </ul>
+            </div>
+            
+            <h3>SUPER EASY: Getting User Input</h3>
+            
+            <h4>Example 18: Ask for User's Age</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    
+    printf("How old are you? ");
+    scanf("%d", &age);
+    printf("You are %d years old!\n", age);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output:</strong></p>
+            
+            <div class="output">
+How old are you? 19
+You are 19 years old!
+            </div>
+            
+            <h4>Example 19: Simple Personal Information</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    float height;
+    
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    printf("Enter your height (in feet): ");
+    scanf("%f", &height);
+    
+    printf("\nYour information:\n");
+    printf("Age: %d years\n", age);
+    printf("Height: %.1f feet\n", height);
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output:</strong></p>
+            
+            <div class="output">
+Enter your age: 21
+Enter your height (in feet): 5.8
+
+Your information:
+Age: 21 years
+Height: 5.8 feet
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="decision-making">Basic Decision Making</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> Decision making in programming refers to the ability of a program to choose different paths of execution based on certain conditions. This is implemented using conditional statements that evaluate expressions and execute different blocks of code accordingly.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Concepts:</strong>
+                <ul>
+                    <li><strong>Condition:</strong> An expression that evaluates to true (1) or false (0)</li>
+                    <li><strong>Boolean Logic:</strong> True/False reasoning used in conditions</li>
+                    <li><strong>Control Flow:</strong> The order in which program instructions are executed</li>
+                </ul>
+            </div>
+            
+            <h3>SUPER EASY: Your First Decision</h3>
+            
+            <p>Let's start with the most simple decision-making in C:</p>
+            
+            <h4>Example 20: Is a Number Big?</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number = 15;
+    
+    if (number > 10) {
+        printf("15 is bigger than 10!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+15 is bigger than 10!
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level2f">LEVEL 2F: Simple Yes/No Decisions</h3>
+            
+            <h4>Example 21: Can You Vote?</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    
+    if (age >= 18) {
+        printf("You can vote!\n");
+    } else {
+        printf("You cannot vote yet.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output (Age >= 18):</strong></p>
+            
+            <div class="output">
+Enter your age: 20
+You can vote!
+            </div>
+            
+            <p><strong>Sample Output (Age < 18):</strong></p>
+            
+            <div class="output">
+Enter your age: 16
+You cannot vote yet.
+            </div>
+            
+            <h4>Example 22: Is Number Even or Odd?</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    if (number % 2 == 0) {
+        printf("The number is even.\n");
+    } else {
+        printf("The number is odd.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output (Even):</strong></p>
+            
+            <div class="output">
+Enter a number: 12
+The number is even.
+            </div>
+            
+            <p><strong>Sample Output (Odd):</strong></p>
+            
+            <div class="output">
+Enter a number: 7
+The number is odd.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level2g">LEVEL 2G: Multiple Choices</h3>
+            
+            <h4>Practice 23: Grade Calculator (Simple)</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int marks;
+    
+    printf("Enter your marks: ");
+    scanf("%d", &marks);
+    
+    if (marks >= 90) {
+        printf("Grade: A\n");
+    } else if (marks >= 80) {
+        printf("Grade: B\n");
+    } else if (marks >= 70) {
+        printf("Grade: C\n");
+    } else if (marks >= 60) {
+        printf("Grade: D\n");
+    } else {
+        printf("Grade: F\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Practice 24: Simple Calculator</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num1, num2;
+    char operation;
+    
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+    printf("Enter operation (+, -, *, /): ");
+    scanf(" %c", &operation);
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+    
+    if (operation == '+') {
+        printf("Result: %d\n", num1 + num2);
+    } else if (operation == '-') {
+        printf("Result: %d\n", num1 - num2);
+    } else if (operation == '*') {
+        printf("Result: %d\n", num1 * num2);
+    } else if (operation == '/') {
+        printf("Result: %d\n", num1 / num2);
+    } else {
+        printf("Invalid operation!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Control Flow</h2>
+            
+            <p>Control flow statements allow your program to execute certain blocks of code only if specific conditions are met. This is how programs make decisions.</p>
+            
+            <h3>🔄 Control Flow Decision Tree</h3>
+            
+            <div class="diagram">
+                <!-- FLOWCHART PLACEHOLDER: Control Flow Decision Tree -->
+                <!-- Description: Program execution flow showing decision points -->
+                <!-- Elements: Start → Read Input → Decision Point → True/False branches → Execute blocks → End -->
+                <p><strong>[FLOWCHART TO BE ADDED]</strong> - Control Flow Decision Tree showing program execution flow with decision branches</p>
+            </div>
+            
+            <h3>📋 Control Structure Comparison Table</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Structure</th>
+                            <th>When to Use</th>
+                            <th>Syntax</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>if</code></td>
+                            <td>Single condition</td>
+                            <td><code>if (condition) { }</code></td>
+                            <td>Simple yes/no decisions</td>
+                        </tr>
+                        <tr>
+                            <td><code>if-else</code></td>
+                            <td>Two alternatives</td>
+                            <td><code>if (condition) { } else { }</code></td>
+                            <td>Either/or situations</td>
+                        </tr>
+                        <tr>
+                            <td><code>if-else if-else</code></td>
+                            <td>Multiple conditions</td>
+                            <td><code>if (c1) { } else if (c2) { } else { }</code></td>
+                            <td>Multiple exclusive choices</td>
+                        </tr>
+                        <tr>
+                            <td><code>switch</code></td>
+                            <td>Many specific values</td>
+                            <td><code>switch (var) { case 1: break; }</code></td>
+                            <td>Menu selections, constants</td>
+                        </tr>
+                        <tr>
+                            <td><code>nested if</code></td>
+                            <td>Complex conditions</td>
+                            <td><code>if (c1) { if (c2) { } }</code></td>
+                            <td>Dependent conditions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>1. The if Statement</h3>
+            
+            <p>The <code>if</code> statement runs a block of code only when its condition is true (evaluates to 1).</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+if (condition) {
+    // code to run if condition is true
+}</pre>
+            </div>
+            
+            <h4>Example 25: Check if Number is Positive</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    printf("Enter a number: ");
+    scanf("%d", &number);
+
+    if (number > 0) {
+        printf("The number is positive.\n");
+    }
+
+    printf("End of program.\n");
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: 15
+                The number is positive.
+                End of program.
+            </div>
+            
+            <h4>if Statement Practice Programs</h4>
+            
+            <h5>Example 26: Check if One Number is Greater Than Another</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num1, num2;
+    
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+    
+    if (num1 > num2) {
+        printf("%d is greater than %d\n", num1, num2);
+    } else {
+        printf("%d is not greater than %d\n", num1, num2);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter first number: 25
+                Enter second number: 15
+                25 is greater than 15
+            </div>
+            
+            <h5>Example 27: Check Voting Eligibility Based on Age</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    
+    if (age >= 18) {
+        printf("You are eligible to vote!\n");
+    } else {
+        printf("You are not eligible to vote yet.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter your age: 20
+                You are eligible to vote!
+            </div>
+            
+            <p>If you enter 10, the output will be:</p>
+            
+            <div class="output">
+The number is positive.
+End of program.
+            </div>
+            
+            <p>If you enter -5, the output will be:</p>
+            
+            <div class="output">
+End of program.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>2. The if-else Statement</h3>
+            
+            <p>The <code>if-else</code> statement provides an alternative block of code to run if the condition is false.</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+if (condition) {
+    // code to run if condition is true
+} else {
+    // code to run if condition is false
+}</pre>
+            </div>
+            
+            <h4>Example 28: Check Pass or Fail</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int score;
+    
+    printf("Enter your score: ");
+    scanf("%d", &score);
+
+    if (score >= 60) {
+        printf("You passed!\n");
+    } else {
+        printf("You failed. Better luck next time!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter your score: 75
+                You passed!
+            </div>
+            
+            <h4>if-else Statement Practice Programs</h4>
+            
+            <h5>Example 29: Check if Student Has Passed or Failed Based on Marks</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    float marks;
+    
+    printf("Enter your marks: ");
+    scanf("%f", &marks);
+    
+    if (marks >= 40.0) {
+        printf("Congratulations! You have passed.\n");
+    } else {
+        printf("Sorry, you have failed. Better luck next time!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter your marks: 85.5
+                Congratulations! You have passed.
+            </div>
+            
+            <h5>Example 30: Check if Number is Positive or Negative</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    if (number > 0) {
+        printf("The number is positive.\n");
+    } else {
+        printf("The number is negative.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: -8
+                The number is negative.
+            </div>
+            
+            <h5>Example 31: Check if Number is Odd or Even</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    if (number % 2 == 0) {
+        printf("The number is even.\n");
+    } else {
+        printf("The number is odd.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: 7
+                The number is odd.
+            </div>
+            
+            <h5>Example 15: Check if a Year is a Leap Year</h5>
+            
+            <p>(Already exists below)</p>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+You failed. Better luck next time!
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>3. The if-else if-else Ladder</h3>
+            
+            <p>This structure lets you check multiple conditions in sequence.</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+if (condition1) {
+    // code for condition1
+} else if (condition2) {
+    // code for condition2
+} else {
+    // code if no conditions are met
+}</pre>
+            </div>
+            
+            <h4>Example 32: Positive, Negative, or Zero Check</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    
+    printf("Enter a number: ");
+    scanf("%d", &number);
+
+    if (number > 0) {
+        printf("The number is positive.\n");
+    } else if (number < 0) {
+        printf("The number is negative.\n");
+    } else {
+        printf("The number is zero.\n");
+    }
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: 0
+                The number is zero.
+            </div>
+            
+            <h4>if-else if-else Ladder Practice Programs</h4>
+            
+            <h5>Example 33: Print Day of Week Based on User's Choice</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int day;
+    
+    printf("Enter a number (1-7): ");
+    scanf("%d", &day);
+    
+    if (day == 1) {
+        printf("Sunday\n");
+    } else if (day == 2) {
+        printf("Monday\n");
+    } else if (day == 3) {
+        printf("Tuesday\n");
+    } else if (day == 4) {
+        printf("Wednesday\n");
+    } else if (day == 5) {
+        printf("Thursday\n");
+    } else if (day == 6) {
+        printf("Friday\n");
+    } else if (day == 7) {
+        printf("Saturday\n");
+    } else {
+        printf("Invalid input! Please enter a number between 1-7.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number (1-7): 5
+                Thursday
+            </div>
+            
+            <h5>Example 34: Print Month Based on User's Choice</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int month;
+    
+    printf("Enter month number (1-12): ");
+    scanf("%d", &month);
+    
+    if (month == 1) {
+        printf("January\n");
+    } else if (month == 2) {
+        printf("February\n");
+    } else if (month == 3) {
+        printf("March\n");
+    } else if (month == 4) {
+        printf("April\n");
+    } else if (month == 5) {
+        printf("May\n");
+    } else if (month == 6) {
+        printf("June\n");
+    } else if (month == 7) {
+        printf("July\n");
+    } else if (month == 8) {
+        printf("August\n");
+    } else if (month == 9) {
+        printf("September\n");
+    } else if (month == 10) {
+        printf("October\n");
+    } else if (month == 11) {
+        printf("November\n");
+    } else if (month == 12) {
+        printf("December\n");
+    } else {
+        printf("Invalid month! Please enter a number between 1-12.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter month number (1-12): 8
+                August
+            </div>
+            
+            <h5>Example 35: Simple Calculator for Two Numbers</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    float num1, num2, result;
+    char operator;
+    
+    printf("Enter first number: ");
+    scanf("%f", &num1);
+    printf("Enter operator (+, -, *, /): ");
+    scanf(" %c", &operator);
+    printf("Enter second number: ");
+    scanf("%f", &num2);
+    
+    if (operator == '+') {
+        result = num1 + num2;
+        printf("%.2f + %.2f = %.2f\n", num1, num2, result);
+    } else if (operator == '-') {
+        result = num1 - num2;
+        printf("%.2f - %.2f = %.2f\n", num1, num2, result);
+    } else if (operator == '*') {
+        result = num1 * num2;
+        printf("%.2f * %.2f = %.2f\n", num1, num2, result);
+    } else if (operator == '/') {
+        if (num2 != 0) {
+            result = num1 / num2;
+            printf("%.2f / %.2f = %.2f\n", num1, num2, result);
+        } else {
+            printf("Error: Division by zero is not allowed!\n");
+        }
+    } else {
+        printf("Invalid operator!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+The number is zero.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 36: Simple Grade Calculator</h3>
+            
+            <p>Write a program that takes a student's score (an integer between 0 and 100) and prints their grade based on the following rules:</p>
+            
+            <ul>
+                <li>90-100: "Grade A"</li>
+                <li>80-89: "Grade B"</li>
+                <li>70-79: "Grade C"</li>
+                <li>60-69: "Grade D"</li>
+                <li>Below 60: "Grade F"</li>
+            </ul>
+            
+            <h4>Solution to Example 36:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int score;
+    printf("Enter the student's score (0-100): ");
+    scanf("%d", &score);
+
+    if (score >= 90) {
+        printf("Grade A\n");
+    } else if (score >= 80) {
+        printf("Grade B\n");
+    } else if (score >= 70) {
+        printf("Grade C\n");
+    } else if (score >= 60) {
+        printf("Grade D\n");
+    } else {
+        printf("Grade F\n");
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 37: Find the Bigger Number</h3>
+            
+            <p>Write a simple program that compares two numbers and tells which one is bigger.</p>
+            
+            <h4>Solution:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num1, num2;
+    
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+    
+    if (num1 > num2) {
+        printf("%d is bigger than %d\n", num1, num2);
+    } else if (num2 > num1) {
+        printf("%d is bigger than %d\n", num2, num1);
+    } else {
+        printf("Both numbers are equal!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 38: Simple Age Groups</h3>
+            
+            <p>Write a program that tells what age group someone belongs to:</p>
+            
+            <ul>
+                <li>0-12: Child</li>
+                <li>13-17: Teenager</li>
+                <li>18+: Adult</li>
+            </ul>
+            
+            <h4>Solution:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    
+    if (age >= 0 && age <= 12) {
+        printf("You are a child.\n");
+    } else if (age >= 13 && age <= 17) {
+        printf("You are a teenager.\n");
+    } else if (age >= 18) {
+        printf("You are an adult.\n");
+    } else {
+        printf("Invalid age!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter your age: 16
+                You are a teenager.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 39: Leap Year Checker</h3>
+            
+            <p>Write a program to check if a given year is a leap year. A year is a leap year if:</p>
+            
+            <ul>
+                <li>It's divisible by 4 AND</li>
+                <li>If it's divisible by 100, then it must also be divisible by 400</li>
+            </ul>
+            
+            <h4>Solution:</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int year;
+    
+    printf("Enter a year: ");
+    scanf("%d", &year);
+    
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+        printf("%d is a leap year.\n", year);
+    } else {
+        printf("%d is not a leap year.\n", year);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a year: 2024
+                2024 is a leap year.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>More Control Flow Practice Problems</h3>
+            
+            <h4>Example 40: Voting Eligibility</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    printf("Enter your age: ");
+    scanf("%d", &age);
+
+    if (age >= 18) {
+        printf("You are eligible to vote.\n");
+    } else {
+        printf("You are not eligible to vote.\n");
+    }
+
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter your age: 21
+                You are eligible to vote.
+            </div>
+            
+            <h4>Example 41: Vowel or Consonant</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+
+    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+        ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
+        printf("%c is a vowel.\n", ch);
+    } else {
+        printf("%c is a consonant.\n", ch);
+    }
+
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a character: A
+                A is a vowel.
+            </div>
+            
+            <h4>Example 42: Positive, Negative, or Zero</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    if (num > 0) {
+        printf("The number is positive.\n");
+    } else if (num < 0) {
+        printf("The number is negative.\n");
+    } else {
+        printf("The number is zero.\n");
+    }
+
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: -7
+                The number is negative.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Nested if-else Statements</h3>
+            
+            <p>Sometimes you need to check conditions inside other conditions. This is called nesting.</p>
+            
+            <h4>Nested if-else Practice Programs</h4>
+            
+            <h5>Example 43: Find Maximum of Three Numbers</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 15, b = 25, c = 20;
+    
+    printf("Numbers are: %d, %d, %d\n", a, b, c);
+    
+    if (a >= b) {
+        if (a >= c) {
+            printf("Maximum is: %d\n", a);
+        } else {
+            printf("Maximum is: %d\n", c);
+        }
+    } else {
+        if (b >= c) {
+            printf("Maximum is: %d\n", b);
+        } else {
+            printf("Maximum is: %d\n", c);
+        }
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Example 44: Marriage Eligibility Based on Gender and Age</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 22;
+    char gender = 'M'; // 'M' for Male, 'F' for Female
+    
+    if (gender == 'M' || gender == 'm') {
+        if (age >= 21) {
+            printf("Male is eligible for marriage.\n");
+        } else {
+            printf("Male is not eligible for marriage. Minimum age is 21.\n");
+        }
+    } else if (gender == 'F' || gender == 'f') {
+        if (age >= 18) {
+            printf("Female is eligible for marriage.\n");
+        } else {
+            printf("Female is not eligible for marriage. Minimum age is 18.\n");
+        }
+    } else {
+        printf("Invalid gender input.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Level 2 Challenges (Try these when you're ready!)</h3>
+            
+            <h4>Example 45: Find the Biggest of Two Numbers</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a, b;
+    
+    printf("Enter first number: ");
+    scanf("%d", &a);
+    printf("Enter second number: ");
+    scanf("%d", &b);
+    
+    if (a > b) {
+        printf("%d is bigger!\n", a);
+    } else if (b > a) {
+        printf("%d is bigger!\n", b);
+    } else {
+        printf("Both numbers are equal!\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output:</strong></p>
+            
+            <div class="output">
+Enter first number: 25
+Enter second number: 18
+25 is bigger!
+            </div>
+            
+            <h4>Example 46: Age Group Checker</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    
+    printf("Enter your age: ");
+    scanf("%d", &age);
+    
+    if (age <= 12) {
+        printf("You are a child.\n");
+    } else if (age <= 17) {
+        printf("You are a teenager.\n");
+    } else if (age <= 59) {
+        printf("You are an adult.\n");
+    } else {
+        printf("You are a senior citizen.\n");
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Sample Output:</strong></p>
+            
+            <div class="output">
+Enter your age: 23
+You are an adult.
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="level1.html" class="nav-link">← Previous: Level 1</a>
+            <a href="level3.html" class="nav-link">Next: Level 3 →</a>
+        </div>
+    </div>
+
+    <!-- Prism.js JavaScript for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    
+    <script>
+        // Function to save notes to local storage
+        function saveNotes(level) {
+            const textarea = document.getElementById(`notes-${level}`);
+            localStorage.setItem(`notes-${level}`, textarea.value);
+            alert('Notes saved!');
+        }
+
+        // Function to load notes from local storage
+        function loadNotes(level) {
+            const textarea = document.getElementById(`notes-${level}`);
+            const savedNotes = localStorage.getItem(`notes-${level}`);
+            if (savedNotes) {
+                textarea.value = savedNotes;
+            }
+        }
+
+        // Function to save checklist state to local storage
+        function saveChecklistState() {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                localStorage.setItem(checkbox.id, checkbox.checked);
+            });
+        }
+
+        // Function to load checklist state from local storage
+        function loadChecklistState() {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const isChecked = localStorage.getItem(checkbox.id) === 'true';
+                checkbox.checked = isChecked;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const preElements = document.querySelectorAll('pre:not([class*="language-"])');
+            preElements.forEach(pre => {
+                pre.className = 'language-c line-numbers';
+            });
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
+
+            // Mobile menu functionality
+            const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenuContent = document.getElementById('mobileMenuContent');
+
+            // Create navigation structure for mobile menu
+            const navigationStructure = `
+                <div class="mobile-level-card">
+                    <h2>LEVEL 1: INTRODUCTION</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level1.html#algorithms">📚 Algorithms & Flowcharts Guide</a></li>
+                        <li><a href="level1.html#introduction">Introduction to C Programming</a></li>
+                        <li><a href="level1.html#features">Key Features of C</a></li>
+                        <li><a href="level1.html#usage">Where is C Used?</a></li>
+                        <li><a href="level1.html#setup">Setup and First Program</a></li>
+                        <li><a href="level1.html#variables">Variables and Format Specifiers</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 2: BASIC OPERATIONS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level2.html#operators">Basic Operators in C</a></li>
+                        <li><a href="level2.html#input-output">Simple Input and Output</a></li>
+                        <li><a href="level2.html#decision-making">Basic Decision Making</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 3: CONTROL STRUCTURES</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level3.html#advanced-control">Advanced Control Flow</a></li>
+                        <li><a href="level3.html#loops">Introduction to Loops</a></li>
+                        <li><a href="level3.html#loop-problems">Loop Practice Problems</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 4: FUNCTIONS & ARRAYS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level4.html#functions">Functions</a></li>
+                        <li><a href="level4.html#arrays">Arrays</a></li>
+                        <li><a href="level4.html#strings">Strings</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 5: ADVANCED TOPICS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level5.html#practice-programs">Advanced Practice Programs</a></li>
+                        <li><a href="level5.html#advanced">Advanced Topics & Best Practices</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card" style="text-align: center; border-top: 2px solid var(--secondary-color); margin-top: 1rem; padding-top: 1rem;">
+                    <a href="index.html" style="color: var(--secondary-color); font-weight: 600; text-decoration: none; font-size: 1.1rem;">🏠 Back to Home</a>
+                </div>
+            `;
+            
+            if (mobileMenuContent) {
+                mobileMenuContent.innerHTML = navigationStructure;
+
+                // Add collapsible functionality to mobile cards
+                const mobileHeaders = mobileMenuContent.querySelectorAll('.mobile-level-card h2');
+                mobileHeaders.forEach(header => {
+                    header.addEventListener('click', () => {
+                        const card = header.parentElement;
+                        card.classList.toggle('collapsed');
+                    });
+                });
+            }
+
+            // Open mobile menu
+            if (burgerMenu) {
+                burgerMenu.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                });
+            }
+
+            // Close mobile menu
+            if (closeMenu) {
+                closeMenu.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            }
+
+            // Close mobile menu when clicking outside content
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', (e) => {
+                    if (e.target === mobileMenu) {
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

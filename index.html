@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Learning Hub - C Programming & MS-DOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --font-main: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-c: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dos: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-future: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.7;
+            color: #333;
+            background: var(--gradient-primary);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 4rem 2rem;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.8;
+            color: var(--dark-color);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.7;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Navigation Menu */
+        .nav-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-c);
+        }
+
+        .card.dos-card::before {
+            background: var(--gradient-dos);
+        }
+
+        .card.future-card::before {
+            background: var(--gradient-future);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .card-link i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Collapsible Sections */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .section-header.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header-content {
+            flex: 1;
+        }
+
+        .section-toggle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .section-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .section-content.expanded {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        /* Level Cards */
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .level-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .level-card:hover {
+            background: white;
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .level-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .level-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .level-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .level-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Placeholder Section */
+        .placeholder-section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .placeholder-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .placeholder-title {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .placeholder-description {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .level-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1 class="hero-title">Programming Learning Hub</h1>
+        <p class="hero-subtitle">Master C Programming & MS-DOS</p>
+        <p class="hero-description">
+            Your comprehensive resource for learning programming fundamentals, from C language basics to MS-DOS command mastery. 
+            Start your programming journey with structured lessons, practical examples, and hands-on exercises.
+        </p>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="#c-programming">C Programming</a></li>
+            <li><a href="#ms-dos">MS-DOS</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#future-content">Coming Soon</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- C Programming Section -->
+        <section id="c-programming" class="section">
+            <div class="section-header" onclick="toggleSection('c-programming-content', this)">
+                <div class="section-header-content">
+                    <h2 class="section-title">C Programming Notes</h2>
+                    <p class="section-description">
+                        Learn C programming from basics to advanced concepts with our comprehensive level-based approach.
+                    </p>
+                </div>
+                <span class="section-toggle">Show</span>
+            </div>
+            
+            <div id="c-programming-content" class="section-content">
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="card-title">C Programming Levels</h3>
+                        <p class="card-description">
+                            Progressive learning path with 5 comprehensive levels covering everything from basic syntax to advanced topics like pointers, structures, and file handling.
+                        </p>
+                        
+                        <div class="level-grid">
+                            <div class="level-card">
+                                <div class="level-number">1</div>
+                                <div class="level-title">Introduction</div>
+                                <a href="level1.html" class="level-link">Start Learning</a>
+                            </div>
+                            <div class="level-card">
+                                <div class="level-number">2</div>
+                                <div class="level-title">Control Flow</div>
+                                <a href="level2.html" class="level-link">Continue</a>
+                            </div>
+                            <div class="level-card">
+                                <div class="level-number">3</div>
+                                <div class="level-title">Functions & Arrays</div>
+                                <a href="level3.html" class="level-link">Explore</a>
+                            </div>
+                            <div class="level-card">
+                                <div class="level-number">4</div>
+                                <div class="level-title">Pointers</div>
+                                <a href="level4.html" class="level-link">Master</a>
+                            </div>
+                            <div class="level-card">
+                                <div class="level-number">5</div>
+                                <div class="level-title">Advanced Topics</div>
+                                <a href="level5.html" class="level-link">Excel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MS-DOS Section -->
+        <section id="ms-dos" class="section">
+            <div class="section-header" onclick="toggleSection('ms-dos-content', this)">
+                <div class="section-header-content">
+                    <h2 class="section-title">MS-DOS Notes</h2>
+                    <p class="section-description">
+                        Understanding MS-DOS commands and operations is essential for system administration and legacy system management.
+                    </p>
+                </div>
+                <span class="section-toggle">Show</span>
+            </div>
+            
+            <div id="ms-dos-content" class="section-content">
+                <div class="card-grid">
+                    <div class="card dos-card">
+                        <div class="card-icon">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <h3 class="card-title">MS-DOS Guide</h3>
+                        <p class="card-description">
+                            Complete reference guide covering all essential MS-DOS commands, file operations, directory management, and system utilities.
+                        </p>
+                        <div class="card-links">
+                            <a href="ms-dos-guide.html" class="card-link">
+                                <i class="fas fa-book-open"></i>
+                                Complete Guide
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card dos-card">
+                        <div class="card-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="card-title">Practice & Exams</h3>
+                        <p class="card-description">
+                            Test your MS-DOS knowledge with practical exercises and exam questions. Perfect for preparation and skill assessment.
+                        </p>
+                        <div class="card-links">
+                            <a href="ms-dos-exam-questions.html" class="card-link">
+                                <i class="fas fa-clipboard-list"></i>
+                                Exam Questions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="section">
+            <h2 class="section-title">Additional Resources</h2>
+            <p class="section-description">
+                Supplementary materials to enhance your learning experience including PDFs, references, and quick guides.
+            </p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3 class="card-title">PDF Resources</h3>
+                    <p class="card-description">
+                        Downloadable PDF guides and reference materials for offline study and quick reference.
+                    </p>
+                    <div class="card-links">
+                        <a href="C Programming MCQ Question Paper.pdf" class="card-link">
+                            <i class="fas fa-download"></i>
+                            C Programming MCQs
+                        </a>
+                        <a href="a.pdf" class="card-link">
+                            <i class="fas fa-download"></i>
+                            Additional Reference
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Content Placeholder -->
+        <section id="future-content" class="section">
+            <h2 class="section-title">Coming Soon</h2>
+            <p class="section-description">
+                We're constantly expanding our content. Here are some exciting additions planned for the future.
+            </p>
+            
+            <!-- Placeholder for Python -->
+            <div class="placeholder-section">
+                <div class="placeholder-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+                <h3 class="placeholder-title">Python Programming</h3>
+                <p class="placeholder-description">
+                    Complete Python course from basics to advanced topics including data structures, web development, and more.
+                </p>
+            </div>
+
+            <!-- Placeholder for Java -->
+            <div class="placeholder-section">
+                <div class="placeholder-icon">
+                    <i class="fab fa-java"></i>
+                </div>
+                <h3 class="placeholder-title">Java Programming</h3>
+                <p class="placeholder-description">
+                    Object-oriented programming with Java, covering fundamentals, OOP concepts, and enterprise development.
+                </p>
+            </div>
+
+            <!-- Placeholder for Web Development -->
+            <div class="placeholder-section">
+                <div class="placeholder-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3 class="placeholder-title">Web Development</h3>
+                <p class="placeholder-description">
+                    HTML, CSS, JavaScript, and modern frameworks for building responsive web applications.
+                </p>
+            </div>
+
+            <!-- Placeholder for Database -->
+            <div class="placeholder-section">
+                <div class="placeholder-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="placeholder-title">Database Management</h3>
+                <p class="placeholder-description">
+                    SQL fundamentals, database design, and management systems for data-driven applications.
+                </p>
+            </div>
+
+            <!-- Generic Placeholder -->
+            <div class="placeholder-section">
+                <div class="placeholder-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <h3 class="placeholder-title">More Topics</h3>
+                <p class="placeholder-description">
+                    Additional programming languages, tools, and technologies based on community feedback and requests.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Programming Learning Hub. All rights reserved.</p>
+        <p>Empowering the next generation of programmers with comprehensive learning resources.</p>
+    </footer>
+
+    <script>
+        // Toggle section visibility
+        function toggleSection(contentId, headerElement) {
+            const content = document.getElementById(contentId);
+            const toggle = headerElement.querySelector('.section-toggle');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                toggle.textContent = 'Show';
+                headerElement.classList.remove('active');
+            } else {
+                content.classList.add('expanded');
+                toggle.textContent = 'Hide';
+                headerElement.classList.add('active');
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Auto-expand section if it's collapsed
+                    const sectionHeader = targetElement.querySelector('.section-header');
+                    const sectionContent = targetElement.querySelector('.section-content');
+                    
+                    if (sectionHeader && sectionContent && !sectionContent.classList.contains('expanded')) {
+                        setTimeout(() => {
+                            toggleSection(sectionContent.id, sectionHeader);
+                        }, 500);
+                    }
+                }
+            });
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0s';
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

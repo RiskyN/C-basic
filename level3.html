@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3: Control Structures in C Programming</title>
+    
+    <!-- Prism.js CSS for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-link::before {
+            content: "←";
+            margin-right: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        h3 {
+            color: var(--dark-color);
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .definition {
+            background-color: #e3f2fd;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .key-terms {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .program-example {
+            background-color: #2d2d2d;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .program-example pre {
+            color: #f8f8f2;
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .output {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            white-space: pre-line;
+        }
+
+        .challenge {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--primary-color);
+        }
+
+        .diagram {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Enhanced Code Styling */
+        pre[class*="language-"] {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        :not(pre) > code {
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)) !important;
+            color: #3498db !important;
+            padding: 0.2em 0.4em !important;
+            border-radius: 6px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.85em !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(52, 152, 219, 0.2) !important;
+        }
+
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .line-numbers-rows > span:before {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .program-example {
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-example pre {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            color: #f8f8f2 !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            overflow-x: auto !important;
+        }
+
+        .output {
+            background: linear-gradient(145deg, #0f3460, #16537e) !important;
+            color: #00ff00 !important;
+            padding: 1.5rem !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            border-radius: 0 0 15px 15px !important;
+            border-top: 2px solid rgba(0, 255, 0, 0.3) !important;
+        }
+
+        /* Burger menu styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 110;
+        }
+
+        .burger-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .burger-bar {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), #fff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .mobile-level-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-level-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-level-card h2::after {
+            content: "▼";
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-level-card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .mobile-topic-list {
+            list-style-type: none;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .mobile-level-card.collapsed .mobile-topic-list {
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .mobile-topic-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-topic-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-topic-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-topic-list a:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            color: var(--secondary-color);
+        }
+        
+        .mobile-topic-list a::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .toc {
+            background: #f5f7fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .toc ol {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Enhanced Code Styling */
+        pre[class*="language-"] {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        :not(pre) > code {
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)) !important;
+            color: #3498db !important;
+            padding: 0.2em 0.4em !important;
+            border-radius: 6px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.85em !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(52, 152, 219, 0.2) !important;
+        }
+
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .line-numbers-rows > span:before {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .program-example {
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-example pre {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            color: #f8f8f2 !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            overflow-x: auto !important;
+        }
+
+        .output {
+            background: linear-gradient(145deg, #0f3460, #16537e) !important;
+            color: #00ff00 !important;
+            padding: 1.5rem !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            border-radius: 0 0 15px 15px !important;
+            border-top: 2px solid rgba(0, 255, 0, 0.3) !important;
+        }
+
+        /* Burger menu styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 110;
+        }
+
+        .burger-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .burger-bar {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), #fff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .mobile-level-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-level-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-level-card h2::after {
+            content: "▼";
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-level-card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .mobile-topic-list {
+            list-style-type: none;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .mobile-level-card.collapsed .mobile-topic-list {
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .mobile-topic-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-topic-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-topic-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-topic-list a:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            color: var(--secondary-color);
+        }
+        
+        .mobile-topic-list a::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .toc {
+            background: #f5f7fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .toc ol {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Enhanced Code Styling */
+        pre[class*="language-"] {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        :not(pre) > code {
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)) !important;
+            color: #3498db !important;
+            padding: 0.2em 0.4em !important;
+            border-radius: 6px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.85em !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(52, 152, 219, 0.2) !important;
+        }
+
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .line-numbers-rows > span:before {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .program-example {
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-example pre {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            color: #f8f8f2 !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            overflow-x: auto !important;
+        }
+
+        .output {
+            background: linear-gradient(145deg, #0f3460, #16537e) !important;
+            color: #00ff00 !important;
+            padding: 1.5rem !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            border-radius: 0 0 15px 15px !important;
+            border-top: 2px solid rgba(0, 255, 0, 0.3) !important;
+        }
+
+        /* Burger menu styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 110;
+        }
+
+        .burger-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .burger-bar {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), #fff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .mobile-level-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-level-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-level-card h2::after {
+            content: "▼";
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-level-card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .mobile-topic-list {
+            list-style-type: none;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .mobile-level-card.collapsed .mobile-topic-list {
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .mobile-topic-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-topic-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-topic-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-topic-list a:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            color: var(--secondary-color);
+        }
+        
+        .mobile-topic-list a::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .toc {
+            background: #f5f7fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .toc ol {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="burger-menu" id="burgerMenu">
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+        </div>
+        <div class="header-content">
+            <a href="index.html" class="back-link">Back to Home</a>
+            <h1>LEVEL 3: CONTROL STRUCTURES</h1>
+            <div style="width: 100px;"></div> <!-- Spacer for alignment -->
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="close-menu" id="closeMenu">&times;</span>
+        <div class="mobile-menu-content" id="mobileMenuContent">
+            <!-- Mobile menu content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <div class="key-terms">
+                <strong>What You'll Learn in This Level:</strong>
+                <ul>
+                    <li>How to repeat code with <code>while</code>, <code>for</code>, and <code>do-while</code> loops.</li>
+                    <li>How to handle multiple choices with the <code>switch</code> statement.</li>
+                    <li>How to control loop behavior with <code>break</code> and <code>continue</code>.</li>
+                </ul>
+            </div>
+
+            <div class="toc">
+                <h3>In this article</h3>
+                <ol>
+                    <li><a href="#loops">Introduction to Loops</a></li>
+                    <li><a href="#what-are-loops">SUPER EASY: What Are Loops?</a></li>
+                    <li><a href="#level3a">LEVEL 3A: Your First Loop</a></li>
+                    <li><a href="#level3b">LEVEL 3B: Understanding the Loop Parts</a></li>
+                    <li><a href="#level3c">LEVEL 3C: Loops with User Input</a></li>
+                    <li><a href="#loop-problems">Level 3 Challenges</a></li>
+                    <li><a href="#advanced-control">Advanced Control Flow</a></li>
+                    <li><a href="#switch-statement">The switch Statement</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="definition">
+                <strong>Definition:</strong> Control structures are programming constructs that control the flow of execution in a program. They determine which statements are executed, how many times, and in what order.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Types of Control Structures:</strong>
+                <ul>
+                    <li><strong>Sequential:</strong> Statements executed one after another (default)</li>
+                    <li><strong>Selection:</strong> Choosing between different paths (if, switch)</li>
+                    <li><strong>Iteration:</strong> Repeating statements multiple times (loops)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="loops">Introduction to Loops</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A loop is a control structure that repeatedly executes a block of statements as long as a specified condition remains true. Loops allow you to avoid writing repetitive code.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Terms:</strong>
+                <ul>
+                    <li><strong>Iteration:</strong> One complete execution of the loop body</li>
+                    <li><strong>Loop Counter:</strong> A variable that tracks how many times the loop has executed</li>
+                    <li><strong>Infinite Loop:</strong> A loop that never terminates (usually a programming error)</li>
+                </ul>
+            </div>
+            
+            <h3 id="what-are-loops">SUPER EASY: What Are Loops?</h3>
+            
+            <p>Sometimes we want to repeat the same thing many times. Instead of writing the same code over and over, we use <strong>loops</strong>!</p>
+            
+            <h4>Without Loop (Bad Way):</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello!\n");
+    printf("Hello!\n");
+    printf("Hello!\n");
+    printf("Hello!\n");
+    printf("Hello!\n");
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>With Loop (Good Way):</h4>
+            
+            <div class="definition">
+                <strong>Program Definition:</strong> This program demonstrates the power of loops in C programming. It uses a <code>for</code> loop to repeat the same action multiple times, eliminating code duplication and making the program more efficient and maintainable.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Loop Components Explained:</strong>
+                <ul>
+                    <li><strong>Loop Initialization:</strong> <code>i = 1</code> sets the starting value for the counter variable</li>
+                    <li><strong>Loop Condition:</strong> <code>i <= 5</code> determines when the loop should continue executing</li>
+                    <li><strong>Loop Increment:</strong> <code>i++</code> increases the counter by 1 after each iteration</li>
+                    <li><strong>Loop Body:</strong> The code inside braces <code>{}</code> that gets repeated</li>
+                    <li><strong>Iteration:</strong> Each time the loop executes is called one iteration</li>
+                </ul>
+            </div>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i;
+    for (i = 1; i <= 5; i++) {
+        printf("Hello!\n");
+    }
+    return 0;
+}</pre>
+            </div>
+            
+            <p>Both programs do the same thing, but the second one is much better!</p>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level3a">LEVEL 3A: Your First Loop</h3>
+            
+            <h4>Example 18: Count from 1 to 5</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i;
+    
+    for (i = 1; i <= 5; i++) {
+        printf("Number: %d\n", i);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level3b">LEVEL 3B: Understanding the Loop Parts</h3>
+            
+            <p>Let's break down the <code>for</code> loop:</p>
+            
+            <div class="program-example">
+                <pre>
+for (i = 1; i <= 5; i++) {
+    // code to repeat
+}</pre>
+            </div>
+            
+            <ul>
+                <li><code>i = 1</code> → Start with i = 1</li>
+                <li><code>i <= 5</code> → Keep going while i is 5 or less</li>
+                <li><code>i++</code> → Add 1 to i each time</li>
+                <li>The code inside <code>{ }</code> runs each time</li>
+            </ul>
+            
+            <h4>Example 47: Count from 1 to 10</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i;
+    
+    printf("Counting from 1 to 10:\n");
+    for (i = 1; i <= 10; i++) {
+        printf("%d ", i);
+    }
+    printf("\nDone!\n");
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Example 48: Count Backwards</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i;
+    
+    printf("Countdown:\n");
+    for (i = 10; i >= 1; i--) {
+        printf("%d ", i);
+    }
+    printf("Blast off! 🚀\n");
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <p><strong>Output:</strong></p>
+            
+            <div class="output">
+Countdown:
+10 9 8 7 6 5 4 3 2 1 Blast off! 🚀
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="level3c">LEVEL 3C: Loops with User Input</h3>
+            
+            <h4>Example 49: Print User's Name Multiple Times</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char name[50];
+    int times, i;
+    
+    printf("Enter your name: ");
+    scanf("%s", name);
+    printf("How many times to print it? ");
+    scanf("%d", &times);
+    
+    for (i = 1; i <= times; i++) {
+        printf("%d. %s\n", i, name);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter your name: John
+                How many times to print it? 3
+                1. John
+                2. John
+                3. John
+            </div>
+            
+            <h4>Example 50: Addition Table</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int number, i;
+    
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    printf("Addition table for %d:\n", number);
+    for (i = 1; i <= 10; i++) {
+        printf("%d + %d = %d\n", number, i, number + i);
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: 5
+                Addition table for 5:
+                5 + 1 = 6
+                5 + 2 = 7
+                5 + 3 = 8
+                5 + 4 = 9
+                5 + 5 = 10
+                5 + 6 = 11
+                5 + 7 = 12
+                5 + 8 = 13
+                5 + 9 = 14
+                5 + 10 = 15
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 id="loop-problems">Level 3 Challenges (For when you're ready!)</h3>
+            
+            <h4>Example 51: Sum of First N Numbers</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int n, i, sum = 0;
+    
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    
+    for (i = 1; i <= n; i++) {
+        sum = sum + i;
+    }
+    
+    printf("Sum of first %d numbers = %d\n", n, sum);
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Enter a number: 5
+                Sum of first 5 numbers = 15
+            </div>
+            
+            <h4>Example 52: Even Numbers from 2 to 20</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i;
+    
+    printf("Even numbers from 2 to 20:\n");
+    for (i = 2; i <= 20; i = i + 2) {
+        printf("%d ", i);
+    }
+    printf("\n");
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <div class="output">
+                Even numbers from 2 to 20:
+                2 4 6 8 10 12 14 16 18 20
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="advanced-control">Advanced Control Flow</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> Advanced control flow refers to more complex decision-making structures that handle multiple conditions, nested decisions, and sophisticated program logic beyond simple if-else statements.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Advanced Concepts:</strong>
+                <ul>
+                    <li><strong>Nested Conditions:</strong> if statements inside other if statements</li>
+                    <li><strong>Multiple Conditions:</strong> Using logical operators to combine conditions</li>
+                    <li><strong>Switch Statements:</strong> Efficient way to handle multiple specific values</li>
+                </ul>
+            </div>
+            
+            <p>Now that you understand basic decisions and loops, let's learn more advanced techniques:</p>
+        </div>
+
+        <div class="content-section">
+            <h3 id="switch-statement">4. The switch Statement</h3>
+            
+            <p>The <code>switch</code> statement is used when you need to compare a variable against many different values. It's often cleaner than using multiple <code>if-else if</code> statements.</p>
+            
+            <h4>Syntax:</h4>
+            
+            <div class="program-example">
+                <pre>
+switch (variable) {
+    case value1:
+        // code to run if variable equals value1
+        break;
+    case value2:
+        // code to run if variable equals value2
+        break;
+    default:
+        // code to run if no cases match
+        break;
+}</pre>
+            </div>
+            
+            <h4>switch Statement Practice Programs</h4>
+            
+            <h5>Example 53: Day of Week Using Switch</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int day;
+    
+    printf("Enter a number (1-7): ");
+    scanf("%d", &day);
+    
+    switch (day) {
+        case 1:
+            printf("Sunday\n");
+            break;
+        case 2:
+            printf("Monday\n");
+            break;
+        case 3:
+            printf("Tuesday\n");
+            break;
+        case 4:
+            printf("Wednesday\n");
+            break;
+        case 5:
+            printf("Thursday\n");
+            break;
+        case 6:
+            printf("Friday\n");
+            break;
+        case 7:
+            printf("Saturday\n");
+            break;
+        default:
+            printf("Invalid input! Please enter 1-7.\n");
+            break;
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Example 54: Month Using Switch</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int month;
+    
+    printf("Enter month number (1-12): ");
+    scanf("%d", &month);
+    
+    switch (month) {
+        case 1: printf("January\n"); break;
+        case 2: printf("February\n"); break;
+        case 3: printf("March\n"); break;
+        case 4: printf("April\n"); break;
+        case 5: printf("May\n"); break;
+        case 6: printf("June\n"); break;
+        case 7: printf("July\n"); break;
+        case 8: printf("August\n"); break;
+        case 9: printf("September\n"); break;
+        case 10: printf("October\n"); break;
+        case 11: printf("November\n"); break;
+        case 12: printf("December\n"); break;
+        default: printf("Invalid month!\n"); break;
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Example 55: Simple Calculator Using Switch</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    float num1, num2, result;
+    char operator;
+    
+    printf("Enter first number: ");
+    scanf("%f", &num1);
+    printf("Enter operator (+, -, *, /): ");
+    scanf(" %c", &operator);
+    printf("Enter second number: ");
+    scanf("%f", &num2);
+    
+    switch (operator) {
+        case '+':
+            result = num1 + num2;
+            printf("%.2f + %.2f = %.2f\n", num1, num2, result);
+            break;
+        case '-':
+            result = num1 - num2;
+            printf("%.2f - %.2f = %.2f\n", num1, num2, result);
+            break;
+        case '*':
+            result = num1 * num2;
+            printf("%.2f * %.2f = %.2f\n", num1, num2, result);
+            break;
+        case '/':
+            if (num2 != 0) {
+                result = num1 / num2;
+                printf("%.2f / %.2f = %.2f\n", num1, num2, result);
+            } else {
+                printf("Error: Division by zero!\n");
+            }
+            break;
+        default:
+            printf("Invalid operator!\n");
+            break;
+    }
+    
+    return 0;
+}</pre>
+            </div>
+            
+            <h5>Example 56: Vowel or Consonant Using Switch</h5>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char ch;
+    
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+    
+    switch (ch) {
+        case 'a':
+        case 'e':
+        case 'i':
+        case 'o':
+        case 'u':
+        case 'A':
+        case 'E':
+        case 'I':
+        case 'O':
+        case 'U':
+            printf("%c is a vowel.\n", ch);
+            break;
+        default:
+            if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+                printf("%c is a consonant.\n", ch);
+            } else {
+                printf("%c is not a letter.\n", ch);
+            }
+            break;
+    }
+    
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="level2.html" class="nav-link">← Previous: Level 2</a>
+            <a href="level4.html" class="nav-link">Next: Level 4 →</a>
+        </div>
+    </div>
+
+    <!-- Prism.js JavaScript for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const preElements = document.querySelectorAll('pre:not([class*="language-"])');
+            preElements.forEach(pre => {
+                pre.className = 'language-c line-numbers';
+            });
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
+
+            // Mobile menu functionality
+            const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenuContent = document.getElementById('mobileMenuContent');
+
+            // Create navigation structure for mobile menu
+            const navigationStructure = `
+                <div class="mobile-level-card">
+                    <h2>LEVEL 1: INTRODUCTION</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level1.html#algorithms">📚 Algorithms & Flowcharts Guide</a></li>
+                        <li><a href="level1.html#introduction">Introduction to C Programming</a></li>
+                        <li><a href="level1.html#features">Key Features of C</a></li>
+                        <li><a href="level1.html#usage">Where is C Used?</a></li>
+                        <li><a href="level1.html#setup">Setup and First Program</a></li>
+                        <li><a href="level1.html#variables">Variables and Format Specifiers</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 2: BASIC OPERATIONS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level2.html#operators">Basic Operators in C</a></li>
+                        <li><a href="level2.html#input-output">Simple Input and Output</a></li>
+                        <li><a href="level2.html#decision-making">Basic Decision Making</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 3: CONTROL STRUCTURES</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level3.html#advanced-control">Advanced Control Flow</a></li>
+                        <li><a href="level3.html#loops">Introduction to Loops</a></li>
+                        <li><a href="level3.html#loop-problems">Loop Practice Problems</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 4: FUNCTIONS & ARRAYS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level4.html#functions">Functions</a></li>
+                        <li><a href="level4.html#arrays">Arrays</a></li>
+                        <li><a href="level4.html#strings">Strings</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 5: ADVANCED TOPICS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level5.html#practice-programs">Advanced Practice Programs</a></li>
+                        <li><a href="level5.html#advanced">Advanced Topics & Best Practices</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card" style="text-align: center; border-top: 2px solid var(--secondary-color); margin-top: 1rem; padding-top: 1rem;">
+                    <a href="index.html" style="color: var(--secondary-color); font-weight: 600; text-decoration: none; font-size: 1.1rem;">🏠 Back to Home</a>
+                </div>
+            `;
+            
+            if (mobileMenuContent) {
+                mobileMenuContent.innerHTML = navigationStructure;
+
+                // Add collapsible functionality to mobile cards
+                const mobileHeaders = mobileMenuContent.querySelectorAll('.mobile-level-card h2');
+                mobileHeaders.forEach(header => {
+                    header.addEventListener('click', () => {
+                        const card = header.parentElement;
+                        card.classList.toggle('collapsed');
+                    });
+                });
+            }
+
+            // Open mobile menu
+            if (burgerMenu) {
+                burgerMenu.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                });
+            }
+
+            // Close mobile menu
+            if (closeMenu) {
+                closeMenu.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            }
+
+            // Close mobile menu when clicking outside content
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', (e) => {
+                    if (e.target === mobileMenu) {
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

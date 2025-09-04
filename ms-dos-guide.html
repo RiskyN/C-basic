@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS-DOS Guide - Complete Reference</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        /* CMD Style Terminal */
+        .cmd-terminal {
+            background-color: #0c0c0c;
+            color: #c0c0c0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 2px solid #333;
+            white-space: pre-line;
+            line-height: 1.4;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .cmd-comment {
+            color: #808080;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Block Diagrams */
+        .diagram-container {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .folder-tree {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .file-icon {
+            color: #f39c12;
+        }
+
+        .folder-icon {
+            color: #e74c3c;
+        }
+
+        /* Exercise Sections */
+        .exercise {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .exercise h4 {
+            color: #28a745;
+            margin-top: 0;
+        }
+
+        .objective {
+            font-style: italic;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .step {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        /* Warnings and Tips */
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            .cmd-terminal {
+                padding: 15px;
+                font-size: 14px;
+            }
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(52, 152, 219, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-bar button {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 0 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar button:hover {
+            background: white;
+            color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <button onclick="window.open('ms-dos-exam-questions.html', '_blank')">📝 Practice Exam</button>
+        <button onclick="window.print()">🖨️ Print Guide</button>
+        <button onclick="scrollToTop()">⬆️ Top</button>
+    </div>
+
+    <div class="container">
+        <h1>MS-DOS (Microsoft Disk Operating System)</h1>
+        
+        <div class="tip">
+            <strong>📚 About This Guide:</strong>
+            <p>This guide covers MS-DOS commands and concepts, including both original MS-DOS (1981-1995) and modern Windows Command Prompt commands that evolved from DOS. We've clearly marked which features are Windows-specific vs. original DOS.</p>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button onclick="window.open('ms-dos-exam-questions.html', '_blank')" style="background-color: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">📝 Take Practice Exam</button>
+            </div>
+        </div>
+        
+        <p>MS-DOS (acronym for Microsoft Disk Operating System) is an operating system for x86-based personal computers mostly developed by Microsoft. Collectively, MS-DOS, its rebranding as IBM PC DOS, and some operating systems attempting to be compatible with MS-DOS, are sometimes referred to as "DOS" (which is also the generic acronym for disk operating system). MS-DOS was the main operating system for IBM PC compatible personal computers during the 1980s and the early 1990s, when it was gradually superseded by operating systems offering a graphical user interface (GUI), in various generations of the graphical Microsoft Windows operating system.</p>
+
+        <h2>Historical Timeline</h2>
+        <ul>
+            <li><strong>1981:</strong> MS-DOS 1.0 released with IBM PC</li>
+            <li><strong>1982:</strong> MS-DOS 1.1 - added support for double-sided disks</li>
+            <li><strong>1983:</strong> MS-DOS 2.0 - introduced subdirectories and hard disk support</li>
+            <li><strong>1984:</strong> MS-DOS 3.0 - added network support</li>
+            <li><strong>1987:</strong> MS-DOS 3.3 - improved disk partitioning</li>
+            <li><strong>1988:</strong> MS-DOS 4.0 - introduced graphical shell</li>
+            <li><strong>1991:</strong> MS-DOS 5.0 - memory management improvements</li>
+            <li><strong>1993:</strong> MS-DOS 6.0 - added MOVE, DELTREE, and disk compression</li>
+            <li><strong>1994:</strong> MS-DOS 6.22 - final standalone version</li>
+            <li><strong>1995+:</strong> DOS integrated into Windows 95 and later</li>
+        </ul>
+
+        <h2>Compatibility and Modern Usage</h2>
+        
+        <div class="tip">
+            <strong>💡 Modern Usage:</strong>
+            <ul>
+                <li><strong>Windows Command Prompt (cmd.exe):</strong> Most MS-DOS commands still work in Windows Command Prompt</li>
+                <li><strong>PowerShell:</strong> Many DOS commands work, but PowerShell has its own enhanced cmdlets</li>
+                <li><strong>DOSBox:</strong> Emulator for running original MS-DOS and DOS games</li>
+                <li><strong>FreeDOS:</strong> Open-source DOS-compatible operating system</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Key Differences:</strong>
+            <ul>
+                <li><strong>Original MS-DOS:</strong> Single-user, single-tasking, 16-bit system</li>
+                <li><strong>Windows Command Prompt:</strong> Multi-user, multi-tasking, runs on modern Windows</li>
+                <li><strong>File System:</strong> Original DOS used FAT12/FAT16, modern systems use NTFS/FAT32</li>
+                <li><strong>Memory:</strong> DOS limited to 640KB base memory, Windows has no such limits</li>
+            </ul>
+        </div>
+
+        <h2>Files and Directories</h2>
+        
+        <p>In a computer, data is stored in files. When you run a program, MS-DOS processes the data stored in the file and passes it to the system.</p>
+        
+        <p>In MS-DOS, a file can be up to the maximum size supported by the file system (typically limited by available disk space), however the file name is more restricted, it can only have a maximum length of 8 characters plus 3 for the extension (known as the 8.3 format).</p>
+        
+        <p>Furthermore, the files can only contain the following characters:</p>
+        <ul>
+            <li>letters A to Z</li>
+            <li>numbers 0 to 9</li>
+            <li>the following special characters: <code>$ ~ ! # % & – { } ( ) @ ' _ ^</code></li>
+        </ul>
+        
+        <p>Thus, filenames must not contain:</p>
+        <ul>
+            <li>spaces</li>
+            <li>commas</li>
+            <li>backslash</li>
+            <li>dot (apart from the dot that separates the name and the extension)</li>
+        </ul>
+
+        <h3>Directories</h3>
+        
+        <p>A directory is a location for storing files on your computer. Directories are found in a hierarchical file system, such as Linux, MS-DOS, OS/2, and Unix.</p>
+        
+        <p>The tree command output shows all the local and subdirectories (e.g., the "big" directory in the cdn directory). When looking at this overview, the C: drive is considered the current directory and root directory because there is nothing beneath it and you can't go back any further. If you are using an operating system with multiple user accounts, the directory may also be referred to as a home directory.</p>
+
+        <h2>MS-DOS Commands</h2>
+        
+        <div class="warning">
+            <strong>⚠️ Important Note:</strong>
+            <p>This guide covers both pure MS-DOS commands (from the 1980s-1990s) and modern Windows Command Prompt commands that evolved from DOS. Some commands and features shown here may not work in original MS-DOS systems but are available in Windows Command Prompt (cmd.exe). Where applicable, we'll note which commands are Windows-specific.</p>
+        </div>
+
+        <h3>1. Internal Commands</h3>
+        
+        <p>Internal commands are loaded automatically into memory.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Purpose</th>
+                    <th>Syntax</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CLS</td>
+                    <td>Clears the display screen.</td>
+                    <td><code>C:\&gt; cls</code></td>
+                </tr>
+                <tr>
+                    <td>DIR</td>
+                    <td>Displays a list of directories and files.</td>
+                    <td><code>C:\&gt; dir</code></td>
+                </tr>
+                <tr>
+                    <td>DATE</td>
+                    <td>Displays and allows changing the system date.</td>
+                    <td><code>C:\&gt; date</code></td>
+                </tr>
+                <tr>
+                    <td>TIME</td>
+                    <td>Displays and allows changing the system time.</td>
+                    <td><code>C:\&gt; time</code></td>
+                </tr>
+                <tr>
+                    <td>VER</td>
+                    <td>Displays the MS-DOS version.</td>
+                    <td><code>C:\&gt; ver</code></td>
+                </tr>
+                <tr>
+                    <td>VOL</td>
+                    <td>Displays the disk volume label and serial number.</td>
+                    <td><code>C:\&gt; vol [drive:]</code></td>
+                </tr>
+                <tr>
+                    <td>DRIVE:</td>
+                    <td>Switches to the specified drive.</td>
+                    <td><code>C:\&gt; D:</code> or <code>C:\&gt; A:</code></td>
+                </tr>
+                <tr>
+                    <td>COPY CON</td>
+                    <td>Creates a new file from keyboard input.</td>
+                    <td><code>C:\&gt; copy con filename.extension</code></td>
+                </tr>
+                <tr>
+                    <td>TYPE</td>
+                    <td>Displays the contents of a file.</td>
+                    <td><code>C:\&gt; type path</code></td>
+                </tr>
+                <tr>
+                    <td>REN</td>
+                    <td>Renames a file.</td>
+                    <td><code>C:\&gt; ren oldfilename newfilename</code></td>
+                </tr>
+                <tr>
+                    <td>DEL</td>
+                    <td>Deletes one or more files.</td>
+                    <td><code>C:\&gt; del filename</code></td>
+                </tr>
+                <tr>
+                    <td>MD</td>
+                    <td>Creates a new directory.</td>
+                    <td><code>C:\&gt; md directory</code></td>
+                </tr>
+                <tr>
+                    <td>CD</td>
+                    <td>Changes the current directory.</td>
+                    <td><code>C:\&gt; cd directory_name</code></td>
+                </tr>
+                <tr>
+                    <td>RD</td>
+                    <td>Removes an empty directory.</td>
+                    <td><code>C:\&gt; rd directory</code></td>
+                </tr>
+                <tr>
+                    <td>COPY</td>
+                    <td>Copies a file from one location to another.</td>
+                    <td><code>C:\&gt; copy source_path target_path</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>2. External Commands</h3>
+        
+        <p>External commands require a separate file (e.g., .exe, .bat) to be present on the disk to run. Note: Some commands listed here were introduced in later DOS versions or Windows.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Purpose</th>
+                    <th>Syntax</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CHKDSK</td>
+                    <td>Checks a disk and displays a status report.</td>
+                    <td><code>C:\&gt; chkdsk drive_name</code></td>
+                </tr>
+                <tr>
+                    <td>DISKCOPY</td>
+                    <td>Makes an exact duplicate of a floppy disk.</td>
+                    <td><code>C:\&gt; diskcopy &lt;source&gt; &lt;destination&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>FORMAT</td>
+                    <td>Erases and prepares a disk for use.</td>
+                    <td><code>C:\&gt; format drive_name</code></td>
+                </tr>
+                <tr>
+                    <td>LABEL</td>
+                    <td>Views or changes a disk's volume label.</td>
+                    <td><code>C:\&gt; label drive_name</code></td>
+                </tr>
+                <tr>
+                    <td>SCANDISK</td>
+                    <td>Checks a disk for errors and attempts to repair them. (MS-DOS 6.2+)</td>
+                    <td><code>C:\&gt; scandisk &lt;drive_names&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>MOVE</td>
+                    <td>Moves files from one place to another. (Available in MS-DOS 6.0+)</td>
+                    <td><code>C:\&gt; move &lt;source&gt; &lt;target&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>XCOPY</td>
+                    <td>Extended copy with directory support and advanced options. (MS-DOS 3.2+)</td>
+                    <td><code>C:\&gt; xcopy &lt;source&gt; &lt;destination&gt; [options]</code></td>
+                </tr>
+                <tr>
+                    <td>REPLACE</td>
+                    <td>Replaces files in destination directory with files from source. (MS-DOS 3.2+)</td>
+                    <td><code>C:\&gt; replace &lt;source&gt; &lt;destination&gt; [options]</code></td>
+                </tr>
+                <tr>
+                    <td>ATTRIB</td>
+                    <td>Displays or changes file attributes (read-only, hidden, system, archive).</td>
+                    <td><code>C:\&gt; attrib [+|-][R|H|S|A] &lt;filename&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>PRINT</td>
+                    <td>Prints a text file to a line printer.</td>
+                    <td><code>C:\&gt; print &lt;filename&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>TREE</td>
+                    <td>Displays the directory structure in a graphical tree.</td>
+                    <td><code>C:\&gt; tree path</code></td>
+                </tr>
+                <tr>
+                    <td>DELTREE</td>
+                    <td>Deletes a directory and all of its files and subdirectories. (MS-DOS 6.0+)</td>
+                    <td><code>C:\&gt; deltree path</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Advanced File Copy Operations</h3>
+        
+        <h4>XCOPY Command - Extended Copy</h4>
+        <p><strong>XCOPY</strong> is much more powerful than the basic COPY command. It can copy entire directory structures and provides many useful options.</p>
+        
+        <p><strong>Basic Syntax:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+<span class="cmd-prompt">C:\&gt;</span> xcopy source destination [options]
+            </div>
+        </div>
+
+        <p><strong>Common XCOPY Options:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+/S    - Copy directories and subdirectories (except empty ones)
+/E    - Copy directories and subdirectories (including empty ones)  
+/V    - Verify each copied file
+/Y    - Suppress prompting to confirm overwriting
+/-Y   - Prompt to confirm overwriting
+/D    - Copy only files that are newer than destination
+/A    - Copy only files with archive attribute set
+/M    - Copy only files with archive attribute, then turn off archive bit
+/H    - Copy hidden and system files too
+/R    - Copy read-only files
+/K    - Copy attributes (normally XCOPY resets read-only attribute)
+/C    - Continue copying even if errors occur
+/I    - Assume destination is a directory if copying multiple files
+/Q    - Quiet mode (don't display file names while copying)
+/F    - Display full source and destination file names while copying
+/L    - List files that would be copied (doesn't actually copy)
+            </div>
+        </div>
+
+        <p><strong>XCOPY Examples:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+<span class="cmd-comment">// Copy all subdirectories</span>
+<span class="cmd-prompt">C:\&gt;</span> xcopy C:\Documents D:\Backup /S
+
+<span class="cmd-comment">// Copy all .txt files without prompting</span>
+<span class="cmd-prompt">C:\&gt;</span> xcopy *.txt D:\TextFiles /Y
+
+<span class="cmd-comment">// Copy entire directory tree</span>
+<span class="cmd-prompt">C:\&gt;</span> xcopy C:\Project D:\Project /E /Y
+
+<span class="cmd-comment">// Copy only newer files</span>
+<span class="cmd-prompt">C:\&gt;</span> xcopy source dest /D
+
+<span class="cmd-comment">// Full backup with verification</span>
+<span class="cmd-prompt">C:\&gt;</span> xcopy /S /E /V /Y C:\Data D:\Backup
+            </div>
+        </div>
+
+        <h4>ATTRIB Command - File Attributes</h4>
+        <p>The ATTRIB command lets you view and modify file attributes (properties).</p>
+        
+        <p><strong>File Attributes:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+R = Read-only (cannot be modified)
+H = Hidden (not visible in normal directory listings)
+S = System file
+A = Archive (file has been modified since last backup)
+            </div>
+        </div>
+
+        <p><strong>ATTRIB Examples:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+<span class="cmd-comment">// View and modify file attributes</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib filename.txt              <span class="cmd-comment">; Show current attributes</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib +R filename.txt           <span class="cmd-comment">; Make file read-only</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib -R filename.txt           <span class="cmd-comment">; Remove read-only attribute</span>
+
+<span class="cmd-comment">// Hide and unhide files</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib +H secret.txt             <span class="cmd-comment">; Hide a file</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib -H secret.txt             <span class="cmd-comment">; Unhide a file</span>
+
+<span class="cmd-comment">// Work with multiple files</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib *.* /S                   <span class="cmd-comment">; Show attributes of all files in subdirectories</span>
+            </div>
+        </div>
+
+        <h4>REPLACE Command</h4>
+        <p>The REPLACE command selectively replaces files in the destination with files from the source.</p>
+        
+        <p><strong>REPLACE Options:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+/A    - Add files that don't exist in destination
+/P    - Prompt before replacing each file
+/R    - Replace read-only files too
+/S    - Replace files in subdirectories
+/W    - Wait for disk insertion before starting
+            </div>
+        </div>
+
+        <p><strong>REPLACE Examples:</strong></p>
+        <div class="cmd-terminal">
+            <div class="cmd-content">
+<span class="cmd-comment">// Replace matching files</span>
+<span class="cmd-prompt">C:\&gt;</span> replace C:\New\*.* C:\Old
+
+<span class="cmd-comment">// Add files that don't exist in destination</span>
+<span class="cmd-prompt">C:\&gt;</span> replace source dest /A
+
+<span class="cmd-comment">// Replace DLL files in subdirectories</span>
+<span class="cmd-prompt">C:\&gt;</span> replace *.dll C:\Windows /S
+            </div>
+        </div>
+
+        <h2>Practical Examples and Common Tasks</h2>
+        
+        <div class="tip">
+            <strong>📖 How to Read These Examples:</strong>
+            <ul>
+                <li><strong>Green Text</strong> (<span style="color: #00ff00;">C:\></span>) = Command prompt - this is where you type</li>
+                <li><strong>White Text</strong> = Commands you should type</li>
+                <li><strong>Gray Text</strong> = Comments explaining what each command does (don't type these)</li>
+                <li><strong>Different Prompts</strong> = Show your current directory (e.g., C:\projects> means you're in projects folder)</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Important Notes:</strong>
+            <ul>
+                <li>Type only the command part (white text), not the comments after the semicolon</li>
+                <li>Press Enter after each command</li>
+                <li>The prompt will change as you navigate between directories</li>
+                <li>^Z means press Ctrl+Z to save a file when using "copy con"</li>
+            </ul>
+        </div>
+
+        <h3>Getting Started - Basic Setup</h3>
+        <p><strong>Purpose:</strong> These commands help you check your system and prepare for file operations.</p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> cd \                           <span class="cmd-comment">; Navigate to root directory</span>
+<span class="cmd-prompt">C:\&gt;</span> ver                            <span class="cmd-comment">; Check DOS version</span>
+<span class="cmd-prompt">C:\&gt;</span> vol                            <span class="cmd-comment">; Check volume label</span>
+<span class="cmd-prompt">C:\&gt;</span> date                           <span class="cmd-comment">; Check/set system date</span>
+<span class="cmd-prompt">C:\&gt;</span> time                           <span class="cmd-comment">; Check/set system time</span>
+<span class="cmd-prompt">C:\&gt;</span> cls                            <span class="cmd-comment">; Clear screen</span>
+        </div>
+
+        <h3>Drive Operations</h3>
+        <p><strong>Purpose:</strong> Learn how to switch between different drives (C:, D:, A:) and check drive information. This is essential when working with multiple hard drives or floppy disks.</p>
+        
+        <p><strong>Basic Drive Switching:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> C:                             <span class="cmd-comment">; Switch to C: drive</span>
+<span class="cmd-prompt">C:\&gt;</span> D:                             <span class="cmd-comment">; Switch to D: drive</span>
+<span class="cmd-prompt">D:\&gt;</span> A:                             <span class="cmd-comment">; Switch to A: drive (floppy)</span>
+        </div>
+
+        <p><strong>Checking Drive Information:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">A:\&gt;</span> vol                            <span class="cmd-comment">; Check current drive's volume label</span>
+<span class="cmd-prompt">A:\&gt;</span> vol C:                         <span class="cmd-comment">; Check specific drive's volume label</span>
+<span class="cmd-prompt">A:\&gt;</span> vol D:                         <span class="cmd-comment">; Check D: drive's volume label</span>
+        </div>
+
+        <p><strong>Accessing Files on Other Drives:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">A:\&gt;</span> dir C:                         <span class="cmd-comment">; List files on C: drive from any location</span>
+<span class="cmd-prompt">A:\&gt;</span> dir D:\                        <span class="cmd-comment">; List root directory of D: drive</span>
+        </div>
+
+        <h3>Creating and Managing Files</h3>
+        <p><strong>Purpose:</strong> Learn the basic workflow of creating directories, entering them, creating files with content, and making copies. The "copy con" command creates a new file and lets you type content directly.</p>
+        
+        <p><strong>Step 1: Create and Navigate Directory:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> md projects                    <span class="cmd-comment">; Create a projects directory</span>
+<span class="cmd-prompt">C:\&gt;</span> cd projects                    <span class="cmd-comment">; Enter the projects directory</span>
+        </div>
+
+        <p><strong>Step 2: Create File with Content:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\projects&gt;</span> copy con readme.txt            <span class="cmd-comment">; Create a new file</span>
+This is my project readme file.
+Press Ctrl+Z to save and exit
+        </div>
+
+        <p><strong>Step 3: View and Copy File:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\projects&gt;</span> type readme.txt                <span class="cmd-comment">; Display the file contents</span>
+<span class="cmd-prompt">C:\projects&gt;</span> copy readme.txt backup.txt     <span class="cmd-comment">; Create a backup copy</span>
+        </div>
+
+        <h3>Directory Navigation and Management</h3>
+        <p><strong>Purpose:</strong> Master moving around your file system. These commands show you how to list contents, change directories, go up levels, and visualize your folder structure.</p>
+        
+        <p><strong>Basic Navigation:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> dir                            <span class="cmd-comment">; List current directory contents</span>
+<span class="cmd-prompt">C:\&gt;</span> cd documents                   <span class="cmd-comment">; Change to documents folder</span>
+<span class="cmd-prompt">C:\documents&gt;</span> cd ..                          <span class="cmd-comment">; Go up one level</span>
+        </div>
+
+        <p><strong>Advanced Navigation:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> cd \                           <span class="cmd-comment">; Go to root directory</span>
+<span class="cmd-prompt">C:\&gt;</span> tree                           <span class="cmd-comment">; Show directory structure</span>
+        </div>
+
+        <h3>File Operations</h3>
+        <p><strong>Purpose:</strong> Learn powerful file manipulation techniques using wildcards (*) to work with multiple files at once. These commands save time when managing many files.</p>
+        
+        <p><strong>Viewing and Copying Files:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> dir *.txt                      <span class="cmd-comment">; Show all text files</span>
+<span class="cmd-prompt">C:\&gt;</span> copy *.txt backup\             <span class="cmd-comment">; Copy all text files to backup folder</span>
+        </div>
+
+        <p><strong>File Management:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> del temp*.tmp                  <span class="cmd-comment">; Delete temporary files</span>
+<span class="cmd-prompt">C:\&gt;</span> ren oldfile.doc newfile.doc    <span class="cmd-comment">; Rename a file</span>
+        </div>
+
+        <h3>System Maintenance</h3>
+        <p><strong>Purpose:</strong> Essential commands for keeping your computer healthy. These check for disk errors, format new disks, and scan for problems.</p>
+        
+        <div class="warning">
+            <strong>⚠️ Warning:</strong> The FORMAT command will erase everything on a disk! Only use it on blank or unneeded disks.
+        </div>
+
+        <p><strong>Disk Checking and Repair:</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> chkdsk c: /f                   <span class="cmd-comment">; Check and fix disk errors</span>
+<span class="cmd-prompt">C:\&gt;</span> scandisk c:                    <span class="cmd-comment">; Scan for disk problems</span>
+        </div>
+
+        <p><strong>Disk Formatting (Use with Caution!):</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> format a: /s                   <span class="cmd-comment">; Format floppy and make bootable</span>
+        </div>
+
+        <h3>Advanced File Backup with XCOPY</h3>
+        <p><strong>Purpose:</strong> Learn professional backup techniques using XCOPY. This powerful command can backup entire directory structures, preserve file attributes, and handle large file operations efficiently.</p>
+        
+        <div class="tip">
+            <strong>💡 XCOPY vs COPY:</strong>
+            <ul>
+                <li><strong>COPY:</strong> Basic file copying, one file at a time</li>
+                <li><strong>XCOPY:</strong> Advanced copying with directory support, file verification, and selective options</li>
+            </ul>
+        </div>
+
+        <p><strong>Step 1: Create Project Structure</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> md MyProject                   <span class="cmd-comment">; Create main project folder</span>
+<span class="cmd-prompt">C:\&gt;</span> cd MyProject                   <span class="cmd-comment">; Enter project folder</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> md Source                      <span class="cmd-comment">; Create source code folder</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> md Docs                        <span class="cmd-comment">; Create documentation folder</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> md Config                      <span class="cmd-comment">; Create configuration folder</span>
+        </div>
+
+        <p><strong>Step 2: Create Sample Files</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\MyProject&gt;</span> cd Source                      <span class="cmd-comment">; Enter source folder</span>
+<span class="cmd-prompt">C:\MyProject\Source&gt;</span> copy con main.c             <span class="cmd-comment">; Create source file</span>
+#include &lt;stdio.h&gt;
+int main() { return 0; }
+^Z
+<span class="cmd-prompt">C:\MyProject\Source&gt;</span> copy con utils.h            <span class="cmd-comment">; Create header file</span>
+/* Utility functions */
+^Z
+<span class="cmd-prompt">C:\MyProject\Source&gt;</span> cd ..                       <span class="cmd-comment">; Back to project root</span>
+        </div>
+
+        <p><strong>Step 3: Prepare Backup Location</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\MyProject&gt;</span> md D:\Backups                  <span class="cmd-comment">; Create backup destination</span>
+        </div>
+
+        <p><strong>Step 4: Different Backup Types</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-comment">; Full backup with verification</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> xcopy *.* D:\Backups\Project1 /S /E /V
+
+<span class="cmd-comment">; Backup only C files</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> xcopy Source\*.c D:\Backups\SourceOnly /Y
+
+<span class="cmd-comment">; Incremental backup (only newer files)</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> xcopy *.* D:\Backups\Project1 /D /S
+        </div>
+
+        <p><strong>Step 5: Advanced Backup Options</strong></p>
+        <div class="cmd-terminal">
+<span class="cmd-comment">; Preview what would be copied (without copying)</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> xcopy *.* D:\TestBackup /S /L
+
+<span class="cmd-comment">; Backup with file attributes preserved</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> attrib +R Source\main.c         <span class="cmd-comment">; Make file read-only first</span>
+<span class="cmd-prompt">C:\MyProject&gt;</span> xcopy Source\main.c D:\Backups\Protected /K
+        </div>
+
+        <h2>Step-by-Step Practice Exercises</h2>
+        
+        <div class="tip">
+            <strong>🎯 About These Exercises:</strong>
+            <p>The following exercises are designed to be completed in order. Each one builds practical skills and creates real folder structures on your computer. You can follow along by typing the exact commands shown.</p>
+            
+            <p><strong>What You'll Learn:</strong></p>
+            <ul>
+                <li>How to create and organize folders and files</li>
+                <li>Navigate complex directory structures</li>
+                <li>Copy, move, and delete files safely</li>
+                <li>Work across different drives</li>
+                <li>Clean up files and folders properly</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Before You Start:</strong>
+            <ul>
+                <li>Make sure you're in a safe location (like C:\) where you can create test folders</li>
+                <li>These exercises create temporary files and folders - you can delete them afterward</li>
+                <li>If you make a mistake, don't worry! The cleanup exercises show you how to fix it</li>
+            </ul>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 1: Gender Classification Project</h4>
+            <div class="objective">Objective: Create a simple file organization system</div>
+            
+            <p><strong>Step 1: Create Main Folder and Navigate</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> md Gender                      <span class="cmd-comment">; Create main folder</span>
+<span class="cmd-prompt">C:\&gt;</span> cd Gender                      <span class="cmd-comment">; Enter the folder</span>
+            </div>
+
+            <p><strong>Step 2: Create Files with Content</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Gender&gt;</span> copy con male.txt              <span class="cmd-comment">; Create male file</span>
+List of male names:
+John, Mike, David
+^Z                                  <span class="cmd-comment">; Press Ctrl+Z and Enter to save</span>
+
+<span class="cmd-prompt">C:\Gender&gt;</span> copy con female.txt            <span class="cmd-comment">; Create female file</span>
+List of female names:
+Sarah, Lisa, Emma
+^Z                                  <span class="cmd-comment">; Press Ctrl+Z and Enter to save</span>
+            </div>
+
+            <p><strong>Step 3: Verify and View Files</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Gender&gt;</span> dir                            <span class="cmd-comment">; View created files</span>
+<span class="cmd-prompt">C:\Gender&gt;</span> type male.txt                  <span class="cmd-comment">; Display male file contents</span>
+<span class="cmd-prompt">C:\Gender&gt;</span> type female.txt                <span class="cmd-comment">; Display female file contents</span>
+            </div>
+
+            <p><strong>Step 4: Practice File Operations</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Gender&gt;</span> cd ..                          <span class="cmd-comment">; Go back to parent directory</span>
+<span class="cmd-prompt">C:\&gt;</span> del Gender\male.txt            <span class="cmd-comment">; Delete file from outside folder</span>
+<span class="cmd-prompt">C:\&gt;</span> dir Gender                     <span class="cmd-comment">; Verify deletion</span>
+            </div>
+
+            <div class="diagram-container">
+                <h5>Expected Structure:</h5>
+                <div class="folder-tree">
+C:\
+└── 📁 Gender\
+    ├── 📄 male.txt     (contains: "List of male names: John, Mike, David")
+    └── 📄 female.txt   (contains: "List of female names: Sarah, Lisa, Emma")
+
+After deletion:
+C:\
+└── 📁 Gender\
+    └── 📄 female.txt   (male.txt deleted)
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 2: Library Management System</h4>
+            <div class="objective">Objective: Create nested directories with files</div>
+            
+            <p><strong>Step 1: Create Main Structure</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> md Books                       <span class="cmd-comment">; Create main Books folder</span>
+<span class="cmd-prompt">C:\&gt;</span> cd Books                       <span class="cmd-comment">; Enter Books folder</span>
+<span class="cmd-prompt">C:\Books&gt;</span> md Hindi                       <span class="cmd-comment">; Create Hindi subfolder</span>
+<span class="cmd-prompt">C:\Books&gt;</span> md English                     <span class="cmd-comment">; Create English subfolder</span>
+            </div>
+
+            <p><strong>Step 2: Add Hindi Books</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Books&gt;</span> cd Hindi                       <span class="cmd-comment">; Enter Hindi folder</span>
+<span class="cmd-prompt">C:\Books\Hindi&gt;</span> copy con A.txt                 <span class="cmd-comment">; Create first Hindi book</span>
+Hindi Book A - Ramayana
+^Z
+<span class="cmd-prompt">C:\Books\Hindi&gt;</span> copy con B.txt                 <span class="cmd-comment">; Create second Hindi book</span>
+Hindi Book B - Mahabharata
+^Z
+            </div>
+
+            <p><strong>Step 3: Add English Books</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Books\Hindi&gt;</span> cd ..\English                  <span class="cmd-comment">; Go to English folder</span>
+<span class="cmd-prompt">C:\Books\English&gt;</span> copy con C.txt                 <span class="cmd-comment">; Create first English book</span>
+English Book C - Hamlet
+^Z
+<span class="cmd-prompt">C:\Books\English&gt;</span> copy con D.txt                 <span class="cmd-comment">; Create second English book</span>
+English Book D - Romeo and Juliet
+^Z
+            </div>
+
+            <p><strong>Step 4: View and Verify Structure</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Books\English&gt;</span> cd ..                          <span class="cmd-comment">; Go back to Books folder</span>
+<span class="cmd-prompt">C:\Books&gt;</span> tree                           <span class="cmd-comment">; Display folder structure</span>
+<span class="cmd-prompt">C:\Books&gt;</span> dir Hindi                      <span class="cmd-comment">; List Hindi books</span>
+<span class="cmd-prompt">C:\Books&gt;</span> dir English                    <span class="cmd-comment">; List English books</span>
+            </div>
+
+            <div class="diagram-container">
+                <h5>Expected Structure:</h5>
+                <div class="folder-tree">
+C:\
+└── 📁 Books\
+    ├── 📁 Hindi\
+    │   ├── 📄 A.txt    (contains: "Hindi Book A - Ramayana")
+    │   └── 📄 B.txt    (contains: "Hindi Book B - Mahabharata")
+    └── 📁 English\
+        ├── 📄 C.txt    (contains: "English Book C - Hamlet")
+        └── 📄 D.txt    (contains: "English Book D - Romeo and Juliet")
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 3: Geographic Hierarchy System</h4>
+            <div class="objective">Objective: Create complex nested directory structure</div>
+            
+            <p><strong>Step 1: Create Main Country and States</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> md India                       <span class="cmd-comment">; Create main India folder</span>
+<span class="cmd-prompt">C:\&gt;</span> cd India                       <span class="cmd-comment">; Enter India folder</span>
+<span class="cmd-prompt">C:\India&gt;</span> md Delhi                       <span class="cmd-comment">; Create Delhi state folder</span>
+<span class="cmd-prompt">C:\India&gt;</span> md UP                          <span class="cmd-comment">; Create Uttar Pradesh folder</span>
+            </div>
+
+            <p><strong>Step 2: Create Delhi Subfolders</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\India&gt;</span> cd Delhi                       <span class="cmd-comment">; Enter Delhi folder</span>
+<span class="cmd-prompt">C:\India\Delhi&gt;</span> md NCR                         <span class="cmd-comment">; Create NCR subfolder</span>
+<span class="cmd-prompt">C:\India\Delhi&gt;</span> md Ghaziabad                   <span class="cmd-comment">; Create Ghaziabad subfolder</span>
+            </div>
+
+            <p><strong>Step 3: Create UP Subfolders</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\India\Delhi&gt;</span> cd ..\UP                       <span class="cmd-comment">; Go to UP folder</span>
+<span class="cmd-prompt">C:\India\UP&gt;</span> md Agra                        <span class="cmd-comment">; Create Agra subfolder</span>
+<span class="cmd-prompt">C:\India\UP&gt;</span> md Amroha                      <span class="cmd-comment">; Create Amroha subfolder</span>
+            </div>
+
+            <p><strong>Step 4: Add Files with Complex Navigation</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\India\UP&gt;</span> cd Delhi\NCR                   <span class="cmd-comment">; Navigate to NCR</span>
+<span class="cmd-prompt">C:\India\Delhi\NCR&gt;</span> copy con A.txt                 <span class="cmd-comment">; Create file in NCR</span>
+NCR Area Information
+^Z
+
+<span class="cmd-prompt">C:\India\Delhi\NCR&gt;</span> cd ..\..\UP\Agra               <span class="cmd-comment">; Navigate to Agra</span>
+<span class="cmd-prompt">C:\India\UP\Agra&gt;</span> copy con B.txt                 <span class="cmd-comment">; Create file in Agra</span>
+Agra Tourist Information - Taj Mahal
+^Z
+            </div>
+
+            <p><strong>Step 5: View Complete Structure</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\India\UP\Agra&gt;</span> cd ..\..                       <span class="cmd-comment">; Go back to India folder</span>
+<span class="cmd-prompt">C:\India&gt;</span> tree                           <span class="cmd-comment">; Display complete structure</span>
+            </div>
+
+            <div class="diagram-container">
+                <h5>Expected Structure:</h5>
+                <div class="folder-tree">
+C:\
+└── 📁 India\
+    ├── 📁 Delhi\
+    │   ├── 📁 NCR\
+    │   │   └── 📄 A.txt    (contains: "NCR Area Information")
+    │   └── 📁 Ghaziabad\
+    └── 📁 UP\
+        ├── 📁 Agra\
+        │   └── 📄 B.txt    (contains: "Agra Tourist Information - Taj Mahal")
+        └── 📁 Amroha\
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 4: File Operations Practice</h4>
+            <div class="objective">Objective: Practice copying, moving, and bulk operations</div>
+            
+            <p><strong>Step 1: Create Test File</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> copy con font.txt              <span class="cmd-comment">; Create a test file</span>
+This is a sample font file
+^Z
+            </div>
+
+            <p><strong>Step 2: Practice Copy and Move Operations</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> copy font.txt India\           <span class="cmd-comment">; Copy file to India folder</span>
+<span class="cmd-prompt">C:\&gt;</span> move font.txt India\Delhi\     <span class="cmd-comment">; Move original to Delhi</span>
+            </div>
+
+            <p><strong>Step 3: Bulk File Operations</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> cd India                       <span class="cmd-comment">; Enter India folder</span>
+<span class="cmd-prompt">C:\India&gt;</span> copy *.txt backup\             <span class="cmd-comment">; Copy all txt files (create backup folder first)</span>
+<span class="cmd-prompt">C:\India&gt;</span> del Delhi\*.txt                <span class="cmd-comment">; Delete all txt files in Delhi</span>
+<span class="cmd-prompt">C:\India&gt;</span> dir Delhi                      <span class="cmd-comment">; Verify deletion</span>
+            </div>
+
+            <div class="diagram-container">
+                <h5>Structure Changes During Exercise:</h5>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-title">Step 1 - After creating font.txt:</div>
+                        <div class="folder-tree">
+C:\
+├── 📄 font.txt    (contains: "This is a sample font file")
+└── 📁 India\...
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">Step 2 - After copy operation:</div>
+                        <div class="folder-tree">
+C:\
+├── 📄 font.txt    (original)
+└── 📁 India\
+    ├── 📄 font.txt    (copy)
+    └── ...
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">Step 3 - After move operation:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 India\
+    ├── 📄 font.txt    (moved from root)
+    ├── 📁 Delhi\
+    │   └── 📄 font.txt    (moved here)
+    └── ...
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">Step 4 - After backup and deletion:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 India\
+    ├── 📁 backup\
+    │   └── 📄 font.txt    (backup copy)
+    ├── 📁 Delhi\          (font.txt deleted)
+    └── ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 5: File Attributes and Security</h4>
+            <div class="objective">Objective: Learn file attribute management (MS-DOS 3.0+)</div>
+            
+            <p><strong>Step 1: Create Test File</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> copy con secret.txt            <span class="cmd-comment">; Create a secret file</span>
+This is confidential information
+^Z
+            </div>
+
+            <p><strong>Step 2: Practice Hiding Files</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> attrib +h secret.txt           <span class="cmd-comment">; Hide the file</span>
+<span class="cmd-prompt">C:\&gt;</span> dir                            <span class="cmd-comment">; File won't show in listing</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib -h secret.txt           <span class="cmd-comment">; Unhide the file</span>
+            </div>
+
+            <p><strong>Step 3: Practice Read-Only Protection</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> attrib +r secret.txt           <span class="cmd-comment">; Make file read-only</span>
+<span class="cmd-prompt">C:\&gt;</span> del secret.txt                 <span class="cmd-comment">; Try to delete (will fail)</span>
+<span class="cmd-prompt">C:\&gt;</span> attrib -r secret.txt           <span class="cmd-comment">; Remove read-only</span>
+<span class="cmd-prompt">C:\&gt;</span> del secret.txt                 <span class="cmd-comment">; Now deletion works</span>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 6: Cleanup Operations</h4>
+            <div class="objective">Objective: Practice safe directory removal</div>
+            
+            <p><strong>Step 1: Clean Hindi Books Folder</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> cd Books\Hindi                 <span class="cmd-comment">; Go to Hindi folder</span>
+<span class="cmd-prompt">C:\Books\Hindi&gt;</span> del *.*                        <span class="cmd-comment">; Delete all files</span>
+<span class="cmd-prompt">C:\Books\Hindi&gt;</span> cd ..                          <span class="cmd-comment">; Go back to Books</span>
+<span class="cmd-prompt">C:\Books&gt;</span> rd Hindi                       <span class="cmd-comment">; Remove empty Hindi folder</span>
+            </div>
+
+            <p><strong>Step 2: Clean English Books Folder</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Books&gt;</span> cd English                     <span class="cmd-comment">; Go to English folder</span>
+<span class="cmd-prompt">C:\Books\English&gt;</span> del *.*                        <span class="cmd-comment">; Delete all files</span>
+<span class="cmd-prompt">C:\Books\English&gt;</span> cd ..                          <span class="cmd-comment">; Go back to Books</span>
+<span class="cmd-prompt">C:\Books&gt;</span> rd English                     <span class="cmd-comment">; Remove empty English folder</span>
+            </div>
+
+            <p><strong>Step 3: Remove Main Books Folder</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\Books&gt;</span> cd ..                          <span class="cmd-comment">; Go to parent directory</span>
+<span class="cmd-prompt">C:\&gt;</span> rd Books                       <span class="cmd-comment">; Remove empty Books folder</span>
+            </div>
+
+            <div class="diagram-container">
+                <h5>Cleanup Process Visualization:</h5>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-title">Before Cleanup:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 Books\
+    ├── 📁 Hindi\
+    │   ├── 📄 A.txt
+    │   └── 📄 B.txt
+    └── 📁 English\
+        ├── 📄 C.txt
+        └── 📄 D.txt
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Step 1 - Delete files in Hindi:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 Books\
+    ├── 📁 Hindi\          (empty)
+    └── 📁 English\
+        ├── 📄 C.txt
+        └── 📄 D.txt
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Step 2 - Remove Hindi folder:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 Books\
+    └── 📁 English\
+        ├── 📄 C.txt
+        └── 📄 D.txt
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Step 3 - Delete files in English:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 Books\
+    └── 📁 English\        (empty)
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Step 4 - Remove English folder:</div>
+                        <div class="folder-tree">
+C:\
+└── 📁 Books\              (empty)
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Step 5 - Remove Books folder:</div>
+                        <div class="folder-tree">
+C:\                     (clean)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 7: Quick Cleanup with RD /S (Windows Command Prompt)</h4>
+            <div class="objective">Objective: Learn recursive directory removal in Windows Command Prompt</div>
+            
+            <div class="warning">
+                <strong>⚠️ Windows Feature:</strong> The <code>/S</code> parameter for RD command is available in Windows Command Prompt, not original MS-DOS. In pure MS-DOS, you must delete files first, then remove empty directories manually.
+            </div>
+            
+            <p><strong>Recursive Directory Removal:</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> rd /s India                    <span class="cmd-comment">; Remove India and all contents</span>
+Are you sure (Y/N)? Y               <span class="cmd-comment">; Confirm deletion</span>
+<span class="cmd-prompt">C:\&gt;</span> rd /s /q TempFolder            <span class="cmd-comment">; Quick removal without prompts</span>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 8: Drive Management</h4>
+            <div class="objective">Objective: Practice switching between drives and cross-drive operations</div>
+            
+            <p><strong>Step 1: Check Drive Information</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> C:                             <span class="cmd-comment">; Ensure you're on C: drive</span>
+<span class="cmd-prompt">C:\&gt;</span> vol                            <span class="cmd-comment">; Check C: drive label</span>
+<span class="cmd-prompt">C:\&gt;</span> D:                             <span class="cmd-comment">; Switch to D: drive</span>
+<span class="cmd-prompt">D:\&gt;</span> vol                            <span class="cmd-comment">; Check D: drive label</span>
+            </div>
+
+            <p><strong>Step 2: Create Files on D: Drive</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">D:\&gt;</span> md TestFolder                  <span class="cmd-comment">; Create folder on D: drive</span>
+<span class="cmd-prompt">D:\&gt;</span> cd TestFolder                  <span class="cmd-comment">; Enter the folder</span>
+<span class="cmd-prompt">D:\TestFolder&gt;</span> copy con sample.txt            <span class="cmd-comment">; Create a file on D: drive</span>
+Sample file on D: drive
+^Z
+            </div>
+
+            <p><strong>Step 3: Cross-Drive File Operations</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">D:\TestFolder&gt;</span> C:                             <span class="cmd-comment">; Switch back to C: drive</span>
+<span class="cmd-prompt">C:\&gt;</span> copy D:\TestFolder\sample.txt C:\  <span class="cmd-comment">; Copy file from D: to C:</span>
+<span class="cmd-prompt">C:\&gt;</span> type sample.txt                <span class="cmd-comment">; Display the copied file</span>
+            </div>
+
+            <p><strong>Step 4: Cleanup D: Drive</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> D:                             <span class="cmd-comment">; Switch back to D:</span>
+<span class="cmd-prompt">D:\&gt;</span> del TestFolder\sample.txt      <span class="cmd-comment">; Delete original file</span>
+<span class="cmd-prompt">D:\&gt;</span> rd TestFolder                  <span class="cmd-comment">; Remove empty folder</span>
+<span class="cmd-prompt">D:\&gt;</span> C:                             <span class="cmd-comment">; Return to C: drive</span>
+            </div>
+
+            <div class="diagram-container">
+                <h5>Cross-Drive Structure:</h5>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-title">Before Operations:</div>
+                        <div style="display: flex; justify-content: space-around;">
+                            <div class="folder-tree">
+C:\
+(working here)
+                            </div>
+                            <div class="folder-tree">
+D:\
+(empty)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">After creating on D::</div>
+                        <div style="display: flex; justify-content: space-around;">
+                            <div class="folder-tree">
+C:\
+                            </div>
+                            <div class="folder-tree">
+D:\
+└── 📁 TestFolder\
+    └── 📄 sample.txt
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">After copying to C::</div>
+                        <div style="display: flex; justify-content: space-around;">
+                            <div class="folder-tree">
+C:\
+├── 📄 sample.txt
+                            </div>
+                            <div class="folder-tree">
+D:\
+└── 📁 TestFolder\
+    └── 📄 sample.txt
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">After cleanup:</div>
+                        <div style="display: flex; justify-content: space-around;">
+                            <div class="folder-tree">
+C:\
+├── 📄 sample.txt
+                            </div>
+                            <div class="folder-tree">
+D:\
+(clean)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 9: File Merging Operations</h4>
+            <div class="objective">Objective: Learn how to combine multiple files into one using the copy + command</div>
+            
+            <p><strong>Step 1: Create Source Files</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> copy con file1.txt             <span class="cmd-comment">; Create first file</span>
+This is the content of file 1.
+First file data here.
+^Z
+
+<span class="cmd-prompt">C:\&gt;</span> copy con file2.txt             <span class="cmd-comment">; Create second file</span>
+This is the content of file 2.
+Second file data here.
+^Z
+            </div>
+
+            <p><strong>Step 2: Merge Files and Verify</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> copy file1.txt + file2.txt merged.txt <span class="cmd-comment">; Merge files into one</span>
+<span class="cmd-prompt">C:\&gt;</span> type merged.txt                <span class="cmd-comment">; View merged content</span>
+<span class="cmd-prompt">C:\&gt;</span> dir *.txt                      <span class="cmd-comment">; See all text files created</span>
+            </div>
+            
+            <div class="tip">
+                <strong>💡 File Merging Tips:</strong>
+                <ul>
+                    <li>The + symbol combines multiple files in order</li>
+                    <li>You can merge more than 2 files: <code>copy file1+file2+file3 result.txt</code></li>
+                    <li>Original files remain unchanged after merging</li>
+                    <li>Useful for combining log files, text documents, or data files</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 10: User Management (Windows Command Prompt Only)</h4>
+            <div class="objective">Objective: Learn basic user account management commands in Windows</div>
+            
+            <div class="warning">
+                <strong>⚠️ Important:</strong> 
+                <ul>
+                    <li>This exercise requires running Command Prompt as Administrator</li>
+                    <li><strong>These are Windows NT/2000/XP/Vista/7/8/10/11 commands, NOT original MS-DOS commands</strong></li>
+                    <li>Original MS-DOS had no built-in user management - it was a single-user system</li>
+                    <li>Right-click on Command Prompt and select "Run as Administrator"</li>
+                </ul>
+            </div>
+            
+            <p><strong>Step 1: View and Create Users</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> net user                        <span class="cmd-comment">; List all user accounts</span>
+<span class="cmd-prompt">C:\&gt;</span> net user TestUser /add          <span class="cmd-comment">; Create a new user account</span>
+<span class="cmd-prompt">C:\&gt;</span> net user TestUser 123456        <span class="cmd-comment">; Set password for the user</span>
+<span class="cmd-prompt">C:\&gt;</span> net user TestUser               <span class="cmd-comment">; View user account details</span>
+            </div>
+
+            <p><strong>Step 2: Manage User Groups</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> net localgroup Administrators TestUser /add <span class="cmd-comment">; Add user to Administrators group</span>
+<span class="cmd-prompt">C:\&gt;</span> net localgroup Administrators   <span class="cmd-comment">; View Administrator group members</span>
+<span class="cmd-prompt">C:\&gt;</span> net user Administrator /active:yes <span class="cmd-comment">; Enable built-in Administrator account</span>
+            </div>
+
+            <p><strong>Step 3: Cleanup</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> net user TestUser /delete       <span class="cmd-comment">; Delete the test user (cleanup)</span>
+            </div>
+            
+            <div class="warning">
+                <strong>⚠️ Security Warning:</strong>
+                <ul>
+                    <li>Only create user accounts when necessary</li>
+                    <li>Use strong passwords in real scenarios</li>
+                    <li>Be careful with Administrator privileges</li>
+                    <li>Always clean up test accounts when done</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h4>Exercise 11: Advanced Batch File - Folder Lock/Unlock (Windows Only)</h4>
+            <div class="objective">Objective: Create a practical batch file that can hide and unhide a private folder using Windows-specific features</div>
+            
+            <div class="warning">
+                <strong>⚠️ Windows-Specific Feature:</strong>
+                <ul>
+                    <li>This batch file uses Windows Control Panel GUID trick</li>
+                    <li>Will NOT work in original MS-DOS systems</li>
+                    <li>Works in Windows 95 and later versions</li>
+                    <li>Uses Windows file attributes and folder naming conventions</li>
+                </ul>
+            </div>
+            
+            <p><strong>Step 1: Create the Main Batch File Structure</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> copy con FolderLocker.bat      <span class="cmd-comment">; Create the batch file</span>
+@echo off
+title Folder Locker
+echo.
+echo ===========================
+echo    FOLDER LOCKER UTILITY
+echo ===========================
+echo.
+if EXIST "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}" goto UNLOCK
+if NOT EXIST Private goto MDLOCKER
+:CONFIRM
+echo Are you sure you want to lock the folder Private (Y/N)?
+set/p "cho=>"
+if %cho%==Y goto LOCK
+if %cho%==y goto LOCK
+if %cho%==n goto END
+if %cho%==N goto END
+echo Invalid choice.
+goto CONFIRM
+            </div>
+
+            <p><strong>Step 2: Add Lock and Unlock Logic</strong></p>
+            <div class="cmd-terminal">
+:LOCK
+ren Private "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+attrib +h +s "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+echo Folder locked successfully!
+goto END
+:UNLOCK
+echo Enter password to unlock folder:
+set/p "pass=>"
+if NOT %pass%==1234 goto FAIL
+attrib -h -s "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}"
+ren "Control Panel.{21EC2020-3AEA-1069-A2DD-08002B30309D}" Private
+echo Folder unlocked successfully!
+goto END
+            </div>
+
+            <p><strong>Step 3: Add Error Handling and Folder Creation</strong></p>
+            <div class="cmd-terminal">
+:FAIL
+echo Invalid password!
+goto end
+:MDLOCKER
+md Private
+echo Private folder created. Place your files in it and run this script again to lock.
+goto END
+:END
+pause
+^Z
+            </div>
+
+            <p><strong>Step 4: Test the Batch File</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> FolderLocker.bat             <span class="cmd-comment">; Run the batch file first time (creates Private folder)</span>
+<span class="cmd-prompt">C:\&gt;</span> cd Private                     <span class="cmd-comment">; Enter the Private folder</span>
+<span class="cmd-prompt">C:\Private&gt;</span> copy con secret.txt            <span class="cmd-comment">; Create a test file</span>
+This is my private information!
+^Z
+<span class="cmd-prompt">C:\Private&gt;</span> cd ..                          <span class="cmd-comment">; Go back to parent directory</span>
+            </div>
+
+            <p><strong>Step 5: Test Lock and Unlock Functionality</strong></p>
+            <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> FolderLocker.bat             <span class="cmd-comment">; Run again to lock the folder</span>
+Y                                   <span class="cmd-comment">; Confirm locking</span>
+<span class="cmd-prompt">C:\&gt;</span> dir                            <span class="cmd-comment">; Private folder should be hidden now</span>
+<span class="cmd-prompt">C:\&gt;</span> FolderLocker.bat             <span class="cmd-comment">; Run again to unlock</span>
+1234                                <span class="cmd-comment">; Enter password to unlock</span>
+<span class="cmd-prompt">C:\&gt;</span> dir                            <span class="cmd-comment">; Private folder should be visible again</span>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Security Notice:</strong>
+                <ul>
+                    <li><strong>This is NOT real encryption</strong> - it only hides the folder</li>
+                    <li>The password (1234) is visible in the batch file</li>
+                    <li>Tech-savvy users can easily bypass this "protection"</li>
+                    <li>Use only for basic privacy, not for sensitive data</li>
+                    <li>For real security, use proper encryption tools</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong>💡 How This Works:</strong>
+                <ul>
+                    <li><strong>Rename trick:</strong> Renames folder to look like a system Control Panel</li>
+                    <li><strong>Hidden attributes:</strong> Uses +h +s to hide folder from normal view</li>
+                    <li><strong>Batch logic:</strong> Uses labels (:LOCK, :UNLOCK) for program flow</li>
+                    <li><strong>User input:</strong> Uses set/p to get user choices and password</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Batch Files</h2>
+        
+        <p>A batch file is a text file that contains a sequence of commands for a computer operating system. It's called a batch file because it bundles into a single file a set of commands that would otherwise have to be presented to the system interactively one at a time. A batch file is usually created for command sequences for which a user has a repeated need. In the Disk Operating System (DOS), a batch file has the file name extension "<code>.BAT</code>".</p>
+
+        <h3>Key Features of Batch Files:</h3>
+        <ul>
+            <li><strong>Automation</strong>: Execute multiple commands in sequence</li>
+            <li><strong>Efficiency</strong>: Reduce repetitive typing</li>
+            <li><strong>File Extension</strong>: Must use <code>.BAT</code> extension</li>
+            <li><strong>Text-based</strong>: Can be created with any text editor</li>
+        </ul>
+
+        <h3>Creating and Running Batch Files</h3>
+
+        <div class="tip">
+            <strong>Example 1: Simple Backup Batch File (backup.bat)</strong>
+        </div>
+        <div class="cmd-terminal">
+@echo off
+cls
+echo Creating backup of important files...
+md c:\backup
+copy c:\documents\*.txt c:\backup\
+copy c:\documents\*.doc c:\backup\
+echo Backup completed!
+pause
+        </div>
+
+        <div class="tip">
+            <strong>Example 2: System Cleanup Batch File (cleanup.bat)</strong>
+        </div>
+        <div class="cmd-terminal">
+@echo off
+cls
+echo Cleaning temporary files...
+del c:\temp\*.tmp
+del c:\temp\*.bak
+del c:\windows\temp\*.*
+echo Cleanup completed!
+chkdsk c: /f
+echo System check completed!
+pause
+        </div>
+
+        <div class="tip">
+            <strong>Example 3: Directory Setup Batch File (setup.bat)</strong>
+        </div>
+        <div class="cmd-terminal">
+@echo off
+echo Setting up project directories...
+md c:\project
+md c:\project\source
+md c:\project\backup
+md c:\project\docs
+cd c:\project
+echo Directory structure created!
+tree
+pause
+        </div>
+
+        <div class="warning">
+            <strong>To run a batch file:</strong>
+        </div>
+        <div class="cmd-terminal">
+<span class="cmd-prompt">C:\&gt;</span> backup.bat        <span class="cmd-comment">; Runs the backup.bat file</span>
+<span class="cmd-prompt">C:\&gt;</span> cleanup           <span class="cmd-comment">; Runs cleanup.bat (extension optional)</span>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Always test batch files in a safe environment first</li>
+                <li>Use <code>@echo off</code> to hide command echoing for cleaner output</li>
+                <li>Add <code>pause</code> at the end to see results before window closes</li>
+                <li>Use <code>rem</code> or <code>::</code> for comments in batch files</li>
+            </ul>
+        </div>
+
+        <footer style="margin-top: 50px; padding-top: 20px; border-top: 2px solid #eee; text-align: center; color: #666;">
+            <p>&copy; 2025 MS-DOS Guide - Complete Reference for Learning Command Line Operations</p>
+            <p><em>Master the fundamentals of Microsoft Disk Operating System - Updated and Corrected</em></p>
+            <p><small>Last updated: September 2025 - Clarified differences between original MS-DOS and modern Windows Command Prompt</small></p>
+        </footer>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.cmd-terminal');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const text = this.innerText;
+                    navigator.clipboard.writeText(text).then(() => {
+                        // Visual feedback
+                        this.style.borderColor = '#28a745';
+                        setTimeout(() => {
+                            this.style.borderColor = '#333';
+                        }, 1000);
+                    });
+                });
+            });
+
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 5: Advanced Topics in C Programming</title>
+    
+    <!-- Prism.js CSS for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-link::before {
+            content: "←";
+            margin-right: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        h3 {
+            color: var(--dark-color);
+            margin: 1.5rem 0 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .definition {
+            background-color: #e3f2fd;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .key-terms {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .program-example {
+            background-color: #2d2d2d;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .program-example pre {
+            color: #f8f8f2;
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .output {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            white-space: pre-line;
+        }
+
+        .challenge {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--primary-color);
+        }
+
+        .algorithm-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+
+        .toc {
+            background: #f5f7fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .toc ol {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        .toc a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Enhanced Code Styling */
+        pre[class*="language-"] {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 1.5rem 0 !important;
+            overflow-x: auto !important;
+        }
+
+        code[class*="language-"] {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        :not(pre) > code {
+            background: linear-gradient(145deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)) !important;
+            color: #3498db !important;
+            padding: 0.2em 0.4em !important;
+            border-radius: 6px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.85em !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(52, 152, 219, 0.2) !important;
+        }
+
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .line-numbers-rows > span:before {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .program-example {
+            margin: 1.5rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-example pre {
+            background: linear-gradient(145deg, #1e1e1e, #2d2d2d) !important;
+            color: #f8f8f2 !important;
+            padding: 1.5rem !important;
+            margin: 0 !important;
+            border-radius: 15px !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            overflow-x: auto !important;
+        }
+
+        .output {
+            background: linear-gradient(145deg, #0f3460, #16537e) !important;
+            color: #00ff00 !important;
+            padding: 1.5rem !important;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            border-radius: 0 0 15px 15px !important;
+            border-top: 2px solid rgba(0, 255, 0, 0.3) !important;
+        }
+
+        /* Burger menu styles */
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 110;
+        }
+
+        .burger-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .burger-bar {
+            width: 28px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), #fff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .mobile-level-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-level-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-level-card h2::after {
+            content: "▼";
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+        }
+        
+        .mobile-level-card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .mobile-topic-list {
+            list-style-type: none;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+        }
+        
+        .mobile-level-card.collapsed .mobile-topic-list {
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .mobile-topic-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-topic-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-topic-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: block;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-topic-list a:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            color: var(--secondary-color);
+        }
+        
+        .mobile-topic-list a::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="burger-menu" id="burgerMenu">
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+            <div class="burger-bar"></div>
+        </div>
+        <div class="header-content">
+            <a href="index.html" class="back-link">Back to Home</a>
+            <h1>LEVEL 5: ADVANCED TOPICS</h1>
+            <div style="width: 100px;"></div> <!-- Spacer for alignment -->
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="close-menu" id="closeMenu">&times;</span>
+        <div class="mobile-menu-content" id="mobileMenuContent">
+            <!-- Mobile menu content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-section" style="background: #e3f2fd; border-left: 5px solid #3498db;">
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db;">What You'll Learn in Level 5</h2>
+            <ul style="list-style-type: disc; padding-left: 20px; columns: 2;">
+                <li>Key advanced C topics like Pointers and Structs</li>
+                <li>Common programming mistakes and how to avoid them</li>
+                <li>Effective debugging strategies</li>
+                <li>A quick reference for C syntax and operators</li>
+                <li>Templates for common structures like functions and arrays</li>
+                <li>Common format specifiers for `printf` and `scanf`</li>
+            </ul>
+        </div>
+
+        <div class="toc">
+            <h3>In this article</h3>
+            <ol>
+                <li><a href="#advanced-topics">Advanced Topics</a></li>
+                <li><a href="#common-mistakes">Common Mistakes and Debugging Tips</a></li>
+                <li><a href="#quick-reference">C Programming Quick Reference Card</a></li>
+                <li><a href="#conditional-programs">Basic Conditional Programs</a></li>
+            </ol>
+        </div>
+
+        <div class="content-section">
+            <h2 id="advanced-topics">Advanced Topics</h2>
+            
+            <p>For further learning, explore these topics:</p>
+            
+            <ul>
+                <li><strong>Pointers:</strong> Directly access and manipulate memory. Essential for dynamic data structures and efficient code.</li>
+                <li><strong>Structs:</strong> Group related variables into a single data structure.</li>
+                <li><strong>File I/O:</strong> Reading from and writing to files using <code>fopen</code>, <code>fclose</code>, <code>fprintf</code>, <code>fscanf</code>, etc.</li>
+                <li><strong>Memory Management:</strong> Learn about <code>malloc</code>, <code>free</code>, and avoiding memory leaks.</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 id="common-mistakes">Common Mistakes and Debugging Tips</h2>
+            
+            <h3>1. Common Syntax Errors</h3>
+            <ul>
+                <li><strong>Forgetting semicolons:</strong> Every statement in C must end with <code>;</code></li>
+                <li><strong>Mismatched braces:</strong> Every <code>{</code> must have a corresponding <code>}</code></li>
+                <li><strong>Case sensitivity:</strong> <code>printf</code> is not the same as <code>Printf</code></li>
+                <li><strong>Missing quotes:</strong> Strings must be in double quotes <code>"text"</code>, characters in single quotes <code>'c'</code></li>
+            </ul>
+            
+            <h3>2. Logic Errors</h3>
+            <ul>
+                <li><strong>Off-by-one errors in loops:</strong> Remember arrays start at index 0</li>
+                <li><strong>Infinite loops:</strong> Always ensure loop conditions will eventually become false</li>
+                <li><strong>Wrong operator:</strong> Using <code>=</code> (assignment) instead of <code>==</code> (comparison)</li>
+            </ul>
+            
+            <h3>3. Memory and Array Issues</h3>
+            <ul>
+                <li><strong>Array bounds:</strong> Don't access <code>array[5]</code> if array size is 5 (valid indices: 0-4)</li>
+                <li><strong>Uninitialized variables:</strong> Always initialize variables before using them</li>
+                <li><strong>Buffer overflow:</strong> Be careful with string operations to avoid writing beyond array bounds</li>
+            </ul>
+            
+            <h3>4. Debugging Strategies</h3>
+            <ul>
+                <li><strong>Use printf statements:</strong> Add temporary print statements to see variable values</li>
+                <li><strong>Test small parts:</strong> Break your program into smaller functions and test each</li>
+                <li><strong>Read error messages carefully:</strong> Compiler errors often tell you exactly what's wrong</li>
+                <li><strong>Use consistent indentation:</strong> Makes it easier to spot logic errors</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h3>Example of Common Mistakes:</h3>
+            
+            <h4>WRONG - Common mistakes</h4>
+            
+            <div class="program-example">
+                <pre>
+// WRONG - Common mistakes
+#include &lt;stdio.h&gt;
+
+int main() {
+    int x  // Missing semicolon
+    x = 5
+    
+    if (x = 5) {  // Should be == for comparison
+        printf("x is 5\n")  // Missing semicolon
+    }
+    
+    int arr[5];
+    arr[5] = 10;  // Out of bounds! Valid indices: 0-4
+    
+    return 0
+}</pre>
+            </div>
+            
+            <h4>CORRECT - Fixed version</h4>
+            
+            <div class="program-example">
+                <pre>
+// CORRECT - Fixed version
+#include &lt;stdio.h&gt;
+
+int main() {
+    int x;  // Added semicolon
+    x = 5;  // Added semicolon
+    
+    if (x == 5) {  // Correct comparison operator
+        printf("x is 5\n");  // Added semicolon
+    }
+    
+    int arr[5];
+    arr[4] = 10;  // Correct index (0-4 are valid)
+    
+    return 0;  // Added semicolon
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 id="quick-reference">📋 C Programming Quick Reference Card</h2>
+            
+            <h3>Essential Syntax Patterns</h3>
+            
+            <h4>Basic Program Structure</h4>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    // Your code here
+    return 0;
+}</pre>
+            </div>
+            
+            <h4>Variable Declaration & Initialization</h4>
+            
+            <div class="program-example">
+                <pre>
+int number = 42;
+float pi = 3.14f;
+char grade = 'A';
+char name[50] = "John";</pre>
+            </div>
+            
+            <h4>Input/Output</h4>
+            
+            <div class="program-example">
+                <pre>
+// Output
+printf("Hello, %s! You scored %d%%\n", name, score);
+
+// Input
+scanf("%d", &number);
+scanf("%s", name);  // No & for strings</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Control Structures Quick Syntax</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Structure</th>
+                            <th>Syntax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>If-Else</strong></td>
+                            <td><code>if (condition) { } else { }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Switch</strong></td>
+                            <td><code>switch (var) { case 1: break; default: break; }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>While</strong></td>
+                            <td><code>while (condition) { }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>For</strong></td>
+                            <td><code>for (init; condition; update) { }</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Do-While</strong></td>
+                            <td><code>do { } while (condition);</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Common Operators</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Operators</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Arithmetic</strong></td>
+                            <td><code>+ - * / %</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comparison</strong></td>
+                            <td><code>== != < > <= >=</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logical</strong></td>
+                            <td><code>&& || !</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Assignment</strong></td>
+                            <td><code>= += -= *= /= %=</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Array Operations</h3>
+            
+            <div class="program-example">
+                <pre>
+// 1D Array
+int arr[10] = {1, 2, 3, 4, 5};
+for (int i = 0; i < 10; i++) {
+    printf("%d ", arr[i]);
+}
+
+// 2D Array
+int matrix[3][3] = {{1,2,3}, {4,5,6}, {7,8,9}};
+for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+        printf("%d ", matrix[i][j]);
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>String Operations</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;string.h&gt;
+
+char str1[50], str2[50];
+strcpy(str1, "Hello");          // Copy
+strcat(str1, " World");         // Concatenate
+int len = strlen(str1);         // Length
+int cmp = strcmp(str1, str2);   // Compare</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Function Template</h3>
+            
+            <div class="program-example">
+                <pre>
+// Function declaration
+return_type function_name(parameter_list);
+
+// Function definition
+return_type function_name(parameter_list) {
+    // Function body
+    return value;  // If return_type is not void
+}
+
+// Function call
+result = function_name(arguments);</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Common Format Specifiers</h3>
+            
+            <ul>
+                <li><code>%d</code> - Integer</li>
+                <li><code>%f</code> - Float</li>
+                <li><code>%c</code> - Character</li>
+                <li><code>%s</code> - String</li>
+                <li><code>%lf</code> - Double</li>
+                <li><code>%.2f</code> - Float with 2 decimal places</li>
+            </ul>
+            
+            <h3>Memory Sizes (Typical)</h3>
+            
+            <ul>
+                <li><code>char</code> - 1 byte</li>
+                <li><code>int</code> - 4 bytes</li>
+                <li><code>float</code> - 4 bytes</li>
+                <li><code>double</code> - 8 bytes</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 id="conditional-programs">1. Basic Conditional Programs</h2>
+            
+            <h3>Example 63: Write a program to check whether a person is eligible to vote or not.</h3>
+            
+            <div class="definition">
+                <strong>Program Definition:</strong> This program demonstrates conditional logic using the <code>if-else</code> statement in C. It takes user input, evaluates a condition, and provides different outputs based on the evaluation result. This showcases decision-making in programming.
+            </div>
+            
+            <div class="key-terms">
+                <strong>Key Conditional Programming Concepts:</strong>
+                <ul>
+                    <li><strong>Input Validation:</strong> Using <code>scanf()</code> to receive user input for processing</li>
+                    <li><strong>Conditional Logic:</strong> <code>if-else</code> statement evaluates a boolean condition (age >= 18)</li>
+                    <li><strong>Comparison Operator:</strong> <code>>=</code> compares two values and returns true (1) or false (0)</li>
+                    <li><strong>Program Flow Control:</strong> Execution follows different paths based on condition evaluation</li>
+                    <li><strong>Real-world Application:</strong> Demonstrates how programming logic applies to practical scenarios</li>
+                </ul>
+            </div>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    printf("Enter your age: ");
+    scanf("%d", &age);
+
+    if (age >= 18) {
+        printf("You are eligible to vote.\n");
+    } else {
+        printf("You are not eligible to vote.\n");
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 64: Write a program to check whether a character is vowel or consonant.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+
+    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+        ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
+        printf("%c is a vowel.\n", ch);
+    } else {
+        printf("%c is a consonant.\n", ch);
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 65: Write a program to check whether a number is positive, negative or zero.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    if (num > 0) {
+        printf("The number is positive.\n");
+    } else if (num < 0) {
+        printf("The number is negative.\n");
+    } else {
+        printf("The number is zero.\n");
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 66: Write a program to calculate the grade of a student.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int score;
+    printf("Enter the student's score (0-100): ");
+    scanf("%d", &score);
+
+    if (score >= 90) {
+        printf("Grade A\n");
+    } else if (score >= 80) {
+        printf("Grade B\n");
+    } else if (score >= 70) {
+        printf("Grade C\n");
+    } else if (score >= 60) {
+        printf("Grade D\n");
+    } else {
+        printf("Grade F\n");
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 67: Write a program to check whether a character is vowel or not.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    char ch;
+    printf("Enter a character: ");
+    scanf(" %c", &ch);
+
+    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+        ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
+        printf("%c is a vowel.\n", ch);
+    } else {
+        printf("%c is not a vowel.\n", ch);
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 68: Write a program to print your name 10 times using while loop.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int i = 1;
+    while (i <= 10) {
+        printf("Your Name\n");
+        i++;
+    }
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 69: Write a program to add two numbers (10, 15).</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10, b = 15;
+    int sum = a + b;
+    printf("Sum: %d\n", sum);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 70: Write a program to multiply three numbers (2, 3, 5).</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 2, b = 3, c = 5;
+    int product = a * b * c;
+    printf("Product: %d\n", product);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 71: Write a program to find the square of a given number (7).</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num = 7;
+    int square = num * num;
+    printf("Square of %d is %d\n", num, square);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 72: Write a program to find the area of a rectangle (l=5, b=4).</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int length = 5, breadth = 4;
+    int area = length * breadth;
+    printf("Area of rectangle: %d\n", area);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Example 73: Write a program to calculate the perimeter of a circle.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+#define PI 3.14159
+
+int main() {
+    float radius;
+    printf("Enter the radius of the circle: ");
+    scanf("%f", &radius);
+
+    float perimeter = 2 * PI * radius;
+    printf("Perimeter of the circle: %.2f\n", perimeter);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>13. Write a program to add two numbers (10, 20).</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10, b = 20;
+    int sum = a + b;
+    printf("Sum: %d\n", sum);
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>14. Write a program to find the square and cube of a number.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    int square = num * num;
+    int cube = num * num * num;
+
+    printf("Square: %d\n", square);
+    printf("Cube: %d\n", cube);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>15. Write a program to find the sum, product, and average of three numbers (2, 5, 7).</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 2, b = 5, c = 7;
+    int sum = a + b + c;
+    int product = a * b * c;
+    float average = (float)sum / 3;
+
+    printf("Sum: %d\n", sum);
+    printf("Product: %d\n", product);
+    printf("Average: %.2f\n", average);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>16. Write a program to accept three integer numbers from the user and calculate the sum, product, and average.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a, b, c;
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", &a, &b, &c);
+
+    int sum = a + b + c;
+    int product = a * b * c;
+    float average = (float)sum / 3;
+
+    printf("Sum: %d\n", sum);
+    printf("Product: %d\n", product);
+    printf("Average: %.2f\n", average);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>17. Write a program to find the area of a square.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int side;
+    printf("Enter the side of the square: ");
+    scanf("%d", &side);
+
+    int area = side * side;
+    printf("Area of square: %d\n", area);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>18. Write a program to find the area of a rectangle.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int length, breadth;
+    printf("Enter length and breadth of the rectangle: ");
+    scanf("%d %d", &length, &breadth);
+
+    int area = length * breadth;
+    printf("Area of rectangle: %d\n", area);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>19. Write a program to swap the values of two numbers.</h3>
+            
+            <div class="program-example">
+                <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10, b = 20;
+    printf("Before swapping: a = %d, b = %d\n", a, b);
+
+    int temp = a;
+    a = b;
+    b = temp;
+
+    printf("After swapping: a = %d, b = %d\n", a, b);
+
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="level4.html" class="nav-link">← Previous: Level 4</a>
+            <a href="index.html" class="nav-link">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Prism.js JavaScript for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const preElements = document.querySelectorAll('pre:not([class*="language-"])');
+            preElements.forEach(pre => {
+                pre.className = 'language-c line-numbers';
+            });
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+            }
+
+            // Mobile menu functionality
+            const burgerMenu = document.getElementById('burgerMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenuContent = document.getElementById('mobileMenuContent');
+
+            // Create navigation structure for mobile menu
+            const navigationStructure = `
+                <div class="mobile-level-card">
+                    <h2>LEVEL 1: INTRODUCTION</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level1.html#algorithms">📚 Algorithms & Flowcharts Guide</a></li>
+                        <li><a href="level1.html#introduction">Introduction to C Programming</a></li>
+                        <li><a href="level1.html#features">Key Features of C</a></li>
+                        <li><a href="level1.html#usage">Where is C Used?</a></li>
+                        <li><a href="level1.html#setup">Setup and First Program</a></li>
+                        <li><a href="level1.html#variables">Variables and Format Specifiers</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 2: BASIC OPERATIONS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level2.html#operators">Basic Operators in C</a></li>
+                        <li><a href="level2.html#input-output">Simple Input and Output</a></li>
+                        <li><a href="level2.html#decision-making">Basic Decision Making</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 3: CONTROL STRUCTURES</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level3.html#advanced-control">Advanced Control Flow</a></li>
+                        <li><a href="level3.html#loops">Introduction to Loops</a></li>
+                        <li><a href="level3.html#loop-problems">Loop Practice Problems</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 4: FUNCTIONS & ARRAYS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level4.html#functions">Functions</a></li>
+                        <li><a href="level4.html#arrays">Arrays</a></li>
+                        <li><a href="level4.html#strings">Strings</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card">
+                    <h2>LEVEL 5: ADVANCED TOPICS</h2>
+                    <ul class="mobile-topic-list">
+                        <li><a href="level5.html#practice-programs">Advanced Practice Programs</a></li>
+                        <li><a href="level5.html#advanced">Advanced Topics & Best Practices</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-level-card" style="text-align: center; border-top: 2px solid var(--secondary-color); margin-top: 1rem; padding-top: 1rem;">
+                    <a href="index.html" style="color: var(--secondary-color); font-weight: 600; text-decoration: none; font-size: 1.1rem;">🏠 Back to Home</a>
+                </div>
+            `;
+            
+            if (mobileMenuContent) {
+                mobileMenuContent.innerHTML = navigationStructure;
+
+                // Add collapsible functionality to mobile cards
+                const mobileHeaders = mobileMenuContent.querySelectorAll('.mobile-level-card h2');
+                mobileHeaders.forEach(header => {
+                    header.addEventListener('click', () => {
+                        const card = header.parentElement;
+                        card.classList.toggle('collapsed');
+                    });
+                });
+            }
+
+            // Open mobile menu
+            if (burgerMenu) {
+                burgerMenu.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                });
+            }
+
+            // Close mobile menu
+            if (closeMenu) {
+                closeMenu.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            }
+
+            // Close mobile menu when clicking outside content
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', (e) => {
+                    if (e.target === mobileMenu) {
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            // Enhanced PDF Viewer functionality
+            let currentZoom = 100;
+            const zoomStep = 10;
+            const pdfViewer = document.getElementById('pdf-viewer');
+            const zoomLevel = document.getElementById('pdf-zoom-level');
+            
+            // Zoom In functionality
+            const zoomInBtn = document.getElementById('pdf-zoom-in');
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', function() {
+                    if (currentZoom < 200) {
+                        currentZoom += zoomStep;
+                        updateZoom();
+                    }
+                });
+            }
+
+            // Zoom Out functionality
+            const zoomOutBtn = document.getElementById('pdf-zoom-out');
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', function() {
+                    if (currentZoom > 50) {
+                        currentZoom -= zoomStep;
+                        updateZoom();
+                    }
+                });
+            }
+
+            // Update zoom display and PDF scale
+            function updateZoom() {
+                if (zoomLevel) {
+                    zoomLevel.textContent = currentZoom + '%';
+                }
+                if (pdfViewer) {
+                    pdfViewer.style.transform = `scale(${currentZoom / 100})`;
+                    pdfViewer.style.transformOrigin = 'top center';
+                }
+            }
+
+            // Fullscreen functionality
+            const fullscreenBtn = document.getElementById('pdf-fullscreen');
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', function() {
+                    if (pdfViewer) {
+                        if (pdfViewer.requestFullscreen) {
+                            pdfViewer.requestFullscreen();
+                        } else if (pdfViewer.mozRequestFullScreen) {
+                            pdfViewer.mozRequestFullScreen();
+                        } else if (pdfViewer.webkitRequestFullscreen) {
+                            pdfViewer.webkitRequestFullscreen();
+                        } else if (pdfViewer.msRequestFullscreen) {
+                            pdfViewer.msRequestFullscreen();
+                        }
+                    }
+                });
+            }
+
+            // Check if PDF loads successfully
+            if (pdfViewer) {
+                pdfViewer.addEventListener('load', function() {
+                    console.log('PDF loaded successfully');
+                });
+
+                pdfViewer.addEventListener('error', function() {
+                    console.log('PDF loading error - showing fallback');
+                    const fallback = document.querySelector('.pdf-fallback');
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                        pdfViewer.style.display = 'none';
+                    }
+                });
+            }
+
+            // Keyboard shortcuts for PDF navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.target.closest('.pdf-viewer-container')) {
+                    switch(e.key) {
+                        case '+':
+                        case '=':
+                            e.preventDefault();
+                            if (zoomInBtn) zoomInBtn.click();
+                            break;
+                        case '-':
+                            e.preventDefault();
+                            if (zoomOutBtn) zoomOutBtn.click();
+                            break;
+                        case 'f':
+                        case 'F':
+                            if (e.ctrlKey || e.metaKey) {
+                                e.preventDefault();
+                                if (fullscreenBtn) fullscreenBtn.click();
+                            }
+                            break;
+                    }
+                }
+            });
+            loadNotes('level5');
+            loadChecklistState();
+
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', saveChecklistState);
+            });
+        });
+    </script>
+</body>
+</html>
